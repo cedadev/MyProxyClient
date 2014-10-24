@@ -3,7 +3,7 @@ MyProxyClient
 This a pure* Python implementation of a client to the MyProxy Credential
 Management Server (http://grid.ncsa.uiuc.edu/myproxy/)
 
-* i.e. MyProxy C client libraries are not required for this package. 
+*i.e. MyProxy C client libraries are not required for this package. 
 
 It uses pyOpenSSL to make an SSL connection to the server following the
 messaging interface as outlined in: http://grid.ncsa.uiuc.edu/myproxy/protocol/
