@@ -17,12 +17,12 @@ This package has been tested on Linux Ubuntu Gutsy Gibbon, and Windows XP
 Professional SP2
 
 Documentation
-=============
+-------------
 Epydoc generated documentation is available in documentation/.  run the 
 Makefile to regenerate if required.
 
 Thanks
-======
+------
  * to OMII-UK for funding development of NDG Security over the past year (2007-
 2008)
  * Tom Uram who wrote the myproxy_logon program on which this package is based.
