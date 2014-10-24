@@ -11,7 +11,7 @@ messaging interface as outlined in: http://grid.ncsa.uiuc.edu/myproxy/protocol/
 The code is based on an original program myproxy_logon by Tom Uram of ANL.
 
 Tests
-=====
+-----
 Unit test module with test files is in test/.  See the README in that directory.
 This package has been tested on Linux Ubuntu Gutsy Gibbon, and Windows XP
 Professional SP2
