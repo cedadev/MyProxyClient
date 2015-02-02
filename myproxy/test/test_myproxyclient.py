@@ -21,7 +21,8 @@ from OpenSSL import crypto
 
 from myproxy.client import CaseSensitiveConfigParser, MyProxyClient
 
-mkPath = lambda file: path.join(os.environ['MYPROXYCLIENT_UNITTEST_DIR'], file)
+mkPath = lambda file_: path.join(os.environ['MYPROXYCLIENT_UNITTEST_DIR'],
+                                 file_)
 
 class _MyProxyClientTestCase(unittest.TestCase):
     '''Base implements environment settings common to all test case classes'''
@@ -57,6 +58,7 @@ class MyProxyClientLiveTestCase(_MyProxyClientTestCase):
             self.cfg[section] = dict(configParser.items(section))
         
         configFilePath = path.expandvars(self.cfg['setUp']['cfgFilePath'])
+        
         self.clnt = MyProxyClient(cfgFilePath=configFilePath)
         
         # Get trust roots bootstrapping trust ready for test
@@ -326,7 +328,7 @@ class MyProxyClientInterfaceTestCase(_MyProxyClientTestCase):
             args = (connection, peerCert, errorStatus, errorDepth, 
                     successStatus)
             
-            # This would normally called implicitly during the SSL handshake
+            # This would normally be called implicitly during the SSL handshake
             status = client.serverSSLCertVerify(*args)
             self.assert_(status == successStatus)
             

@@ -144,6 +144,14 @@ class MyProxyServerSSLCertVerification(object):
                     return False
         else:
             return preverifyOK
+
+    def get_verify_server_cert_func(self):
+        def verify_server_cert(connection, peerCert, errorStatus, errorDepth,
+                preverifyOK):
+            return self.__call__(connection, peerCert, errorStatus,
+                                 errorDepth, preverifyOK)
+        
+        return verify_server_cert
              
     def _getCertDN(self):
         return self.__certDN
@@ -315,6 +323,12 @@ class MyProxyClient(object):
     Proxy certificate.  Not currently used by this class, included for
     reference only
     """
+
+    # Parametise SSL METHOD to allow later update if needed - set to TLSv1 to
+    # address POODLE vulnerability
+    SSL_METHOD = SSL.TLSv1_METHOD
+#    SSL_METHOD = SSL.SSLv3_METHOD
+
     MYPROXY_SERVER_ENVVARNAME = 'MYPROXY_SERVER'
     MYPROXY_SERVER_PORT_ENVVARNAME = 'MYPROXY_SERVER_PORT'
     MYPROXY_SERVER_DN_ENVVARNAME = 'MYPROXY_SERVER_DN'
@@ -432,6 +446,13 @@ TRUSTED_CERTS=1"""
         PROPERTY_DEFAULTS class variable for a list of these
         @type **prop: dict
         """       
+
+        # Altered method here for setting verification function.  The previous
+        # mechanism using the classes __call__ method stopped working with
+        # PyOpenSSL version 0.14.  The new approach is to return a copy of a
+        # wrapper function
+        #
+        # P J Kershaw 09/12/14
         self.__serverSSLCertVerify = MyProxyServerSSLCertVerification()
         self.__hostname = None
         self.__port = None
@@ -693,14 +714,16 @@ TRUSTED_CERTS=1"""
         to True for MyProxy client calls unless using the 'bootstrap' trust
         roots mode available with logon and get trust roots calls
         """
-        # Must be version 3 for MyProxy
-        context = SSL.Context(SSL.SSLv3_METHOD)
+        context = SSL.Context(self.__class__.SSL_METHOD)
         
         if verifyPeerWithTrustRoots:
             context.load_verify_locations(None, self.caCertDir)
                 
+            self.__serverSSLCertVerify.hostname = self.hostname
+            verify_cb = self.__serverSSLCertVerify.get_verify_server_cert_func()
+            
             # Verify peer's (MyProxy server) certificate
-            context.set_verify(SSL.VERIFY_PEER, self.__serverSSLCertVerify)
+            context.set_verify(SSL.VERIFY_PEER, verify_cb)
              
         if certFile:
             try:
@@ -1433,7 +1456,7 @@ TRUSTED_CERTS=1"""
     
         # send get command - ensure conversion from unicode before writing
         cmd = MyProxyClient.GET_CMD % (userid, passphrase, lifetime)
-            
+ 
         conn.write(str(cmd))
         
         # process server response
