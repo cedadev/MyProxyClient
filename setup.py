@@ -25,12 +25,15 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
+import os
+THIS_DIR = os.path.dirname(__file__)
+
+
 setup(
     name =            	'MyProxyClient',
     version =         	'1.4.0',
     description =     	'MyProxy Client',
-    long_description = 	'''\
-,
+    long_description = 	open(os.path.join(THIS_DIR, 'README.md')).read(),
     author =          	'Philip Kershaw',
     author_email =    	'Philip.Kershaw@stfc.ac.uk',
     maintainer =        'Philip Kershaw',
