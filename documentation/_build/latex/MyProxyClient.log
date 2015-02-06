@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2013.7.16)  4 FEB 2015 22:40
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2013.7.16)  5 FEB 2015 15:21
 entering extended mode
  %&-line parsing enabled.
 **MyProxyClient.tex
@@ -832,39 +832,100 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 142.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 142.
-[3] [4
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 152.
+(/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+) [3] [4
 
 ]
 Chapter 2.
-[5] [6
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 196.
+[5] [6] [7] [8] [9]
+Underfull \hbox (badness 5817) in paragraph at lines 805--805
+[]\T1/ptm/m/it/10 username\T1/ptm/m/n/10 , \T1/ptm/m/it/10 passphrase\T1/ptm/m/
+n/10 , \T1/ptm/m/it/10 cert-File\T1/ptm/m/n/10 , \T1/ptm/m/it/10 key-File\T1/pt
+m/m/n/10 , \T1/ptm/m/it/10 sslCert-File=None\T1/ptm/m/n/10 , \T1/ptm/m/it/10 ss
+-lKey-File=None\T1/ptm/m/n/10 , \T1/ptm/m/it/10 ss-lKey-
+ []
+
+[10] [11] [12
 
 ]
 Chapter 3.
-[7] [8
+(./MyProxyClient.ind [13] [14
 
 ]
-Chapter 4.
-[9] [10
+Underfull \hbox (badness 10000) in paragraph at lines 6--7
+[]\T1/ptm/m/n/10 changePassphrase() (myproxy.client.MyProxyClient
+ []
 
-]
-Chapter 5.
-(./MyProxyClient.ind) [11] (./MyProxyClient.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--15
+[]\T1/ptm/m/n/10 getDelegation() (myproxy.client.MyProxyClient
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 15--16
+[]\T1/ptm/m/n/10 getTrustRoots() (myproxy.client.MyProxyClient
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--28
+[]\T1/ptm/m/n/10 locateClientCredentials()
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--37
+[]\T1/ptm/m/n/10 openSSLConfFilePath (myproxy.client.MyProxyClient
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--38
+[]\T1/ptm/m/n/10 openSSLConfig (myproxy.client.MyProxyClient at-
+ []
+
+
+Underfull \hbox (badness 5050) in paragraph at lines 43--44
+[]\T1/ptm/m/n/10 proxyCertLifetime (myproxy.client.MyProxyClient at-
+ []
+
+
+Underfull \hbox (badness 5832) in paragraph at lines 44--45
+[]\T1/ptm/m/n/10 proxyCertMaxLifetime (myproxy.client.MyProxyClient
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--50
+[]\T1/ptm/m/n/10 readProxyFile() (myproxy.client.MyProxyClient class
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
+[]\T1/ptm/m/n/10 setDefaultCACertDir() (myproxy.client.MyProxyClient
+ []
+
+[15
+
+]) (./MyProxyClient.aux) ) 
 Here is how much of TeX's memory you used:
- 6364 strings out of 256216
- 81464 string characters out of 1917072
- 147257 words of memory out of 1500000
- 9443 multiletter control sequences out of 10000+200000
- 51096 words of font info for 55 fonts, out of 1200000 for 2000
+ 6447 strings out of 256216
+ 83304 string characters out of 1917072
+ 152348 words of memory out of 1500000
+ 9491 multiletter control sequences out of 10000+200000
+ 53492 words of font info for 60 fonts, out of 1200000 for 2000
  646 hyphenation exceptions out of 8191
- 34i,11n,45p,255b,407s stack positions out of 5000i,500n,6000p,200000b,15000s
-{/usr/share/texmf/fonts/enc/d
-vips/base/8r.enc}</usr/share/texmf/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/sh
-are/texmf/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf/fonts/type1/ur
-w/times/utmb8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmr8a.pfb></usr/sha
-re/texmf/fonts/type1/urw/times/utmri8a.pfb>
-Output written on MyProxyClient.pdf (15 pages, 74704 bytes).
+ 34i,11n,45p,460b,621s stack positions out of 5000i,500n,6000p,200000b,15000s
+{/usr/share/texmf/fonts/enc/dvips/base/8r.enc}</usr/s
+hare/texmf/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf/fonts/type1/urw
+/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
+/share/texmf/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf/fonts/type1
+/urw/helvetic/uhvr8a.pfb></usr/share/texmf/fonts/type1/urw/times/utmb8a.pfb></u
+sr/share/texmf/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf/fonts/type1/u
+rw/times/utmri8a.pfb>
+Output written on MyProxyClient.pdf (19 pages, 138032 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 131072)
- 77 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 50 named destinations out of 1000 (max. 131072)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

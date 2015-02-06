@@ -434,7 +434,7 @@ TRUSTED_CERTS=1"""
     # protected values + extra OpenSSL config object.
     __slots__ = tuple(['__' + k for k in PROPERTY_DEFAULTS.keys()])
     del k
-    __slots__ += ('__openSSLConfig', '__cfg', '__serverSSLCertVerify')
+    __slots__ += ('__openSSLConfig', '__cfg', '__ssl_verification')
 
     def __init__(self, cfgFilePath=None, **prop):
         """Make any initial settings for client connections to MyProxy
@@ -456,7 +456,7 @@ TRUSTED_CERTS=1"""
         # wrapper function
         #
         # P J Kershaw 09/12/14
-        self.__serverSSLCertVerify = MyProxyServerSSLCertVerification()
+        self.__ssl_verification = MyProxyServerSSLCertVerification()
         self.__hostname = None
         self.__port = None
         self.__serverDN = None
@@ -523,24 +523,24 @@ TRUSTED_CERTS=1"""
             self.caCertDir = os.path.expanduser(
                                             MyProxyClient.USER_TRUSTROOT_DIR)
 
-    def _getServerSSLCertVerify(self):
-        return self.__serverSSLCertVerify
+    def _get_ssl_verification(self):
+        return self.__ssl_verification
 
-    def _setServerSSLCertVerify(self, value):
+    def _set_ssl_verification(self, value):
         if not isinstance(value, MyProxyServerSSLCertVerification):
             raise TypeError('Expecting %r derived type for '
-                            '"serverSSLCertVerify" attribute; got %r' %
+                            '"ssl_verification" attribute; got %r' %
                             MyProxyServerSSLCertVerification,
                             value)
-        self.__serverSSLCertVerify = value
+        self.__ssl_verification = value
 
-    serverSSLCertVerify = property(_getServerSSLCertVerify, 
-                                   _setServerSSLCertVerify, 
-                                   doc="Class with a __call__ method which is "
-                                       "passed to the SSL context to verify "
-                                       "the peer (MyProxy server) certificate "
-                                       "in the SSL handshake between this "
-                                       "client and the MyProxy server")
+    ssl_verification = property(_get_ssl_verification, 
+                                _set_ssl_verification, 
+                                doc="Class with a method which is passed to "
+                                    "the SSL context to verify the peer "
+                                    "(MyProxy server) certificate in the SSL "
+                                    "handshake between this client and the "
+                                    "MyProxy server")
 
     def parseConfig(self, cfg, section='DEFAULT'):
         '''Extract parameters from _cfg config object'''
@@ -566,7 +566,7 @@ TRUSTED_CERTS=1"""
             raise TypeError("Expecting string type for hostname attribute")
         
         self.__hostname = val
-        self.__serverSSLCertVerify.hostname = val
+        self.__ssl_verification.hostname = val
         
     hostname = property(fget=_getHostname,
                         fset=_setHostname,
@@ -596,7 +596,7 @@ TRUSTED_CERTS=1"""
             raise TypeError("Expecting string type for serverDN attribute")
         
         self.__serverDN = val
-        self.__serverSSLCertVerify.certDN = val
+        self.__ssl_verification.certDN = val
     
     serverDN = property(fget=_getServerDN,
                         fset=_setServerDN,
@@ -722,8 +722,8 @@ TRUSTED_CERTS=1"""
         if verifyPeerWithTrustRoots:
             context.load_verify_locations(None, self.caCertDir)
                 
-            self.__serverSSLCertVerify.hostname = self.hostname
-            verify_cb = self.__serverSSLCertVerify.get_verify_server_cert_func()
+            self.__ssl_verification.hostname = self.hostname
+            verify_cb = self.__ssl_verification.get_verify_server_cert_func()
             
             # Verify peer's (MyProxy server) certificate
             context.set_verify(SSL.VERIFY_PEER, verify_cb)

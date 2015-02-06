@@ -26,10 +26,6 @@ mkPath = lambda file_: path.join(os.environ['MYPROXYCLIENT_UNITTEST_DIR'],
 
 class _MyProxyClientTestCase(unittest.TestCase):
     '''Base implements environment settings common to all test case classes'''
-    if 'NDGSEC_INT_DEBUG' in os.environ:
-        import pdb
-        pdb.set_trace()
-    
     if 'MYPROXYCLIENT_UNITTEST_DIR' not in os.environ:
         os.environ['MYPROXYCLIENT_UNITTEST_DIR'] = \
                                         path.abspath(path.dirname(__file__))
@@ -243,6 +239,9 @@ class MyProxyClientInterfaceTestCase(_MyProxyClientTestCase):
     HOSTCERT_FILENAME = 'localhost.crt'
     HOSTCERT_FILEPATH = mkPath(HOSTCERT_FILENAME)
     HOSTCERT_DN = '/O=NDG/OU=Security/CN=localhost'
+
+    EXPIREDCERT_FILENAME = 'expired.crt'
+    EXPIREDCERT_FILEPATH = mkPath(EXPIREDCERT_FILENAME)
     
     def test01EnvironmentVarsSet(self):
 
@@ -301,7 +300,7 @@ class MyProxyClientInterfaceTestCase(_MyProxyClientTestCase):
         self.assert_(
                 client.caCertDir == mkPath('/etc/grid-security/certificates')) 
  
-    def test03SSLVerification(self):
+    def test03_ssl_verification(self):
         # SSL verification callback
         
         # Ensure no relevant environment variables are set which might affect
@@ -322,21 +321,34 @@ class MyProxyClientInterfaceTestCase(_MyProxyClientTestCase):
             errorStatus = False
             successStatus = True
             errorDepth = 0
-            peerCertStr = open(self.__class__.HOSTCERT_FILEPATH).read()
-            peerCert = crypto.load_certificate(crypto.FILETYPE_PEM, peerCertStr)
-            
-            args = (connection, peerCert, errorStatus, errorDepth, 
-                    successStatus)
+            valid_peer_cert_str = open(self.__class__.HOSTCERT_FILEPATH).read()
+            valid_peer_cert = crypto.load_certificate(crypto.FILETYPE_PEM, 
+                                                      valid_peer_cert_str)
             
             # This would normally be called implicitly during the SSL handshake
-            status = client.serverSSLCertVerify(*args)
+            status = client.ssl_verification(connection, valid_peer_cert, 
+                                             errorStatus, errorDepth, 
+                                             successStatus)
             self.assert_(status == successStatus)
+
+            expired_peer_cert_str = open(
+                                    self.__class__.EXPIREDCERT_FILEPATH).read()
+            expired_peer_cert = crypto.load_certificate(crypto.FILETYPE_PEM, 
+                                                        expired_peer_cert_str)
             
             # Match based on full DN instead - this takes precedence over
             # hostname match
             client.serverDN = self.__class__.HOSTCERT_DN
-            status = client.serverSSLCertVerify(*args)
+            status = client.ssl_verification(connection, valid_peer_cert, 
+                                             errorStatus, errorDepth, 
+                                             successStatus)
             self.assert_(status == successStatus)
+            
+            # Check for expired certificate
+            status = client.ssl_verification(connection, expired_peer_cert, 
+                                             errorStatus, errorDepth, 
+                                             successStatus)
+            self.assert_(status == errorStatus)
             
         finally:
             if serverDN is not None:

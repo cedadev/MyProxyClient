@@ -23,8 +23,9 @@ Tested on CentOS 6.4.
    
 1.3.1
 -----
- * Fix to MyProxyClient.writeProxyFile and MyProxyClient.readProxyFile to correctly 
-   pick-up overridden file setting.  Thanks to Nicolas Carenton, IPSL.
+ * Fix to `MyProxyClient.writeProxyFile` and 
+   `MyProxyClient.readProxyFile` to correctly pick-up overridden file 
+   setting.  Thanks to Nicolas Carenton, IPSL.
 
 Tests
 =====
@@ -32,7 +33,7 @@ Unit test module with test files is in test/.  See the README in that directory.
 
 Documentation
 =============
-Epydoc generated documentation is available in documentation/.  run the 
+Sphinx generated documentation is available in documentation/.  run the 
 Makefile to regenerate if required.
 
 Thanks
