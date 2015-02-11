@@ -122,7 +122,7 @@
 
 \maketitle
 \tableofcontents
-\phantomsection\label{README::doc}
+\phantomsection\label{index::doc}
 
 
 This a pure* Python implementation of a client to the MyProxy Credential
@@ -141,13 +141,17 @@ The code is based on an original program \code{myproxy\_logon} by Tom Uram of AN
 
 
 \chapter{Examples}
-\label{README:examples}\label{README:myproxy-client-package}
+\label{index:examples}\label{index:myproxy-client-package}
 These show how to retrieve a certificate bootstrapping trust in remote service.
+\begin{description}
+\item[{API:}] \leavevmode
+\begin{Verbatim}[frame=single,commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{myproxy.client} \PYG{k+kn}{import} \PYG{n}{MyProxyClient}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{myproxy\PYGZus{}clnt} \PYG{o}{=} \PYG{n}{MyProxyClient}\PYG{p}{(}\PYG{n}{hostname}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{myproxy.somewhere.ac.uk}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{cert}\PYG{p}{,} \PYG{n}{private\PYGZus{}key} \PYG{o}{=} \PYG{n}{myproxy\PYGZus{}clnt}\PYG{o}{.}\PYG{n}{logon}\PYG{p}{(}\PYG{n}{username}\PYG{p}{,} \PYG{n}{password}\PYG{p}{,} \PYG{n}{bootstrap}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\end{Verbatim}
 
-API:
-\textgreater{}\textgreater{}\textgreater{} from myproxy.client import MyProxyClient
-\textgreater{}\textgreater{}\textgreater{} myproxy\_clnt = MyProxyClient(hostname=''myproxy.somewhere.ac.uk'')
-\textgreater{}\textgreater{}\textgreater{} cert, private\_key = myproxy\_clnt.logon(username, password, bootstrap=True)
+\end{description}
 
 Command line interface:
 
@@ -155,7 +159,7 @@ Command line interface:
 
 
 \chapter{Releases}
-\label{README:releases}
+\label{index:releases}
 1.4.0
 \begin{itemize}
 \item {} 
@@ -181,7 +185,7 @@ IPSL.
 
 
 \chapter{Tests}
-\label{README:tests}
+\label{index:tests}
 Unit test module with test files is in \code{test/}.  See the README in that
 directory.
 
@@ -935,7 +939,7 @@ passed direct into this method
 
 
 \chapter{Indices and tables}
-\label{README:indices-and-tables}\begin{itemize}
+\label{index:indices-and-tables}\begin{itemize}
 \item {} 
 \emph{genindex}
 
