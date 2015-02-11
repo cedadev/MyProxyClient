@@ -6,14 +6,28 @@
 MyProxy Client Package
 ======================
 This a pure* Python implementation of a client to the MyProxy Credential
-Management Server (http://grid.ncsa.uiuc.edu/myproxy/)
+Management Server (http://grid.ncsa.uiuc.edu/myproxy/).  It provides both a 
+Python API and a command line interface.
 
 * i.e. MyProxy C client libraries are not required for this package. 
 
 It uses pyOpenSSL to make an SSL connection to the server following the
 messaging interface as outlined in: http://grid.ncsa.uiuc.edu/myproxy/protocol/
 
-The code is based on an original program myproxy_logon by Tom Uram of ANL.
+The code is based on an original program ``myproxy_logon`` by Tom Uram of ANL.
+
+Examples
+--------
+These show how to retrieve a certificate bootstrapping trust in remote service.
+
+API:
+>>> from myproxy.client import MyProxyClient
+>>> myproxy_clnt = MyProxyClient(hostname="myproxy.somewhere.ac.uk")
+>>> cert, private_key = myproxy_clnt.logon(username, password, bootstrap=True)
+
+Command line interface:
+
+``$ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b``
 
 Releases
 --------
@@ -59,6 +73,5 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 

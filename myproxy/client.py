@@ -102,8 +102,8 @@ class MyProxyServerSSLCertVerification(object):
         SSL context irrespective of any verification checks done here.  If this
         function yields an OK status, it should enforce the preverifyOK value
         so that any error set upstream overrides and is honoured.
-        @rtype: int
-        @return: status code - 0/False = Error, 1/True = OK
+        :rtype: int
+        :return: status code - 0/False = Error, 1/True = OK
         """
         if peerCert.has_expired():
             # Any expired certificate in the chain should result in an error
@@ -769,8 +769,8 @@ TRUSTED_CERTS=1"""
         :type nBitsForKey: int
         :param nBitsForKey: number of bits for private key generation - 
         default is 2048
-        @rtype: OpenSSL.crypto.PKey
-        @return: public/private key pair
+        :rtype: OpenSSL.crypto.PKey
+        :return: public/private key pair
         """
         keyPair = crypto.PKey()
         keyPair.generate_key(crypto.TYPE_RSA, nBitsForKey)
@@ -787,8 +787,8 @@ TRUSTED_CERTS=1"""
         :param keyPair: public/private key pair
         :type messageDigest: basestring
         :param messageDigest: message digest type - default is MD5
-        @rtype: base string
-        @return certificate request PEM text and private key PEM text
+        :rtype: base string
+        :return certificate request PEM text and private key PEM text
         """
         
         # Check all required certifcate request DN parameters are set                
@@ -811,10 +811,10 @@ TRUSTED_CERTS=1"""
         Deserialize a MyProxy server response
         
         :param msg: string response message from MyProxy server
-        @return: tuple of integer response and errorTxt string (if any) and all 
+        :return: tuple of integer response and errorTxt string (if any) and all 
         the fields parsed.  fields is a list of two element, field name, field 
         value tuples.
-        @rtype: tuple
+        :rtype: tuple
         """  
         lines = msg.split('\n')
         fields = [tuple(line.split('=', 1)) for line in lines][:-1]
@@ -850,7 +850,7 @@ TRUSTED_CERTS=1"""
         :param inputDat: string containing the proxy cert and private key
         and signing cert all in DER format
         
-        @return list containing the equivalent to the input in PEM format"""
+        :return list containing the equivalent to the input in PEM format"""
         pemCerts = []
         dat = inputDat
         
@@ -882,9 +882,9 @@ TRUSTED_CERTS=1"""
         :param enableTmpFileLoc: enable setting based on /tmp/x509up_<uid>,
         defaults to False
         :type enableTmpFileLoc: bool
-        @return: private key and certificate file location to use based on the
+        :return: private key and certificate file location to use based on the
         current environment
-        @rtype: tuple
+        :rtype: tuple
         """
         sslKeyFile = None
         sslCertFile = None
@@ -962,8 +962,8 @@ TRUSTED_CERTS=1"""
         """Read proxy cert file following the format used by myproxy-logon - 
         proxy, cert, private key, user cert.
         
-        @rtype: tuple
-        @return: tuple containing proxy cert, private key, user cert"""
+        :rtype: tuple
+        :return: tuple containing proxy cert, private key, user cert"""
         if filePath is None:
             filePath = MyProxyClient.DEF_PROXY_FILEPATH
             
@@ -1106,11 +1106,14 @@ TRUSTED_CERTS=1"""
         of the stored credentials.  Only the owner can later remove 
         credentials with myproxy-destroy or the destroy method.  If not set,
         this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem 
+        
         :param sslKeyFile: corresponding private key file.  See explanation
         for sslCertFile
+        
         :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
         private key is not password protected.  
-        @return none
+        
+        :return none
         """
         globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile or not sslKeyFile:
@@ -1166,7 +1169,7 @@ TRUSTED_CERTS=1"""
         for sslCertFile
         :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
         private key is not password protected.  
-        @return none
+        :return none
         """
         globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile or not sslKeyFile:
@@ -1218,8 +1221,9 @@ TRUSTED_CERTS=1"""
         :type username: string
         :param username: username selected for new credential
         :type passphrase: string
-        :param passphrase: pass-phrase for new credential.  This is the pass
+        :param passphrase: pass-phrase for new credential.  This is the pass 
         phrase which protects keyfile.
+        
         :type certFile: string
         :param certFile: user's X.509 certificate in PEM format
         :type keyFile: string
@@ -1357,8 +1361,8 @@ TRUSTED_CERTS=1"""
         ignored if a key pair is passed in from an external source via the
         keyPair keyword
         
-        @rtype: tuple
-        @return credentials as strings in PEM format: the
+        :rtype: tuple
+        :return credentials as strings in PEM format: the
         user certificate, it's private key and the issuing certificate.  The
         issuing certificate is only set if the user certificate is a proxy
         
@@ -1546,9 +1550,9 @@ TRUSTED_CERTS=1"""
         verify server SSL certificate against CA certificates held in location
         set by the "caCertDir" attribute.
         
-        @return: trust root files as a dictionary keyed by file name with each 
+        :return: trust root files as a dictionary keyed by file name with each 
         item value set to the file contents
-        @rtype: dict
+        :rtype: dict
         """
         if bootstrap:
             log.info('Bootstrapping MyProxy server root of trust.')

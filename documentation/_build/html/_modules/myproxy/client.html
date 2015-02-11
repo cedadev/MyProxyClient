@@ -52,7 +52,6 @@
 <span class="sd">with SSL calls with PyOpenSSL rather use calls to myproxy client executables as</span>
 <span class="sd">in the original.  This version is adapted and extended from an original </span>
 <span class="sd">program myproxy_logon by Tom Uram &lt;turam@mcs.anl.gov&gt;</span>
-<span class="sd">..</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;P J Kershaw&quot;</span>
 <span class="n">__date__</span> <span class="o">=</span> <span class="s">&quot;02/06/05&quot;</span>
@@ -149,8 +148,8 @@
 <span class="sd">        SSL context irrespective of any verification checks done here.  If this</span>
 <span class="sd">        function yields an OK status, it should enforce the preverifyOK value</span>
 <span class="sd">        so that any error set upstream overrides and is honoured.</span>
-<span class="sd">        @rtype: int</span>
-<span class="sd">        @return: status code - 0/False = Error, 1/True = OK</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        :return: status code - 0/False = Error, 1/True = OK</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">peerCert</span><span class="o">.</span><span class="n">has_expired</span><span class="p">():</span>
             <span class="c"># Any expired certificate in the chain should result in an error</span>
@@ -481,7 +480,7 @@
     <span class="c"># protected values + extra OpenSSL config object.</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="s">&#39;__&#39;</span> <span class="o">+</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">PROPERTY_DEFAULTS</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
     <span class="k">del</span> <span class="n">k</span>
-    <span class="n">__slots__</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&#39;__openSSLConfig&#39;</span><span class="p">,</span> <span class="s">&#39;__cfg&#39;</span><span class="p">,</span> <span class="s">&#39;__serverSSLCertVerify&#39;</span><span class="p">)</span>
+    <span class="n">__slots__</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&#39;__openSSLConfig&#39;</span><span class="p">,</span> <span class="s">&#39;__cfg&#39;</span><span class="p">,</span> <span class="s">&#39;__ssl_verification&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfgFilePath</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">prop</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Make any initial settings for client connections to MyProxy</span>
@@ -503,7 +502,7 @@
         <span class="c"># wrapper function</span>
         <span class="c">#</span>
         <span class="c"># P J Kershaw 09/12/14</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span> <span class="o">=</span> <span class="n">MyProxyServerSSLCertVerification</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span> <span class="o">=</span> <span class="n">MyProxyServerSSLCertVerification</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__hostname</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__port</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__serverDN</span> <span class="o">=</span> <span class="bp">None</span>
@@ -570,24 +569,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">caCertDir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span>
                                             <span class="n">MyProxyClient</span><span class="o">.</span><span class="n">USER_TRUSTROOT_DIR</span><span class="p">)</span>
 </div>
-    <span class="k">def</span> <span class="nf">_getServerSSLCertVerify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span>
+    <span class="k">def</span> <span class="nf">_get_ssl_verification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span>
 
-    <span class="k">def</span> <span class="nf">_setServerSSLCertVerify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_set_ssl_verification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">MyProxyServerSSLCertVerification</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;Expecting </span><span class="si">%r</span><span class="s"> derived type for &#39;</span>
-                            <span class="s">&#39;&quot;serverSSLCertVerify&quot; attribute; got </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span>
+                            <span class="s">&#39;&quot;ssl_verification&quot; attribute; got </span><span class="si">%r</span><span class="s">&#39;</span> <span class="o">%</span>
                             <span class="n">MyProxyServerSSLCertVerification</span><span class="p">,</span>
                             <span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="n">serverSSLCertVerify</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_getServerSSLCertVerify</span><span class="p">,</span> 
-                                   <span class="n">_setServerSSLCertVerify</span><span class="p">,</span> 
-                                   <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Class with a __call__ method which is &quot;</span>
-                                       <span class="s">&quot;passed to the SSL context to verify &quot;</span>
-                                       <span class="s">&quot;the peer (MyProxy server) certificate &quot;</span>
-                                       <span class="s">&quot;in the SSL handshake between this &quot;</span>
-                                       <span class="s">&quot;client and the MyProxy server&quot;</span><span class="p">)</span>
+    <span class="n">ssl_verification</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">_get_ssl_verification</span><span class="p">,</span> 
+                                <span class="n">_set_ssl_verification</span><span class="p">,</span> 
+                                <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Class with a method which is passed to &quot;</span>
+                                    <span class="s">&quot;the SSL context to verify the peer &quot;</span>
+                                    <span class="s">&quot;(MyProxy server) certificate in the SSL &quot;</span>
+                                    <span class="s">&quot;handshake between this client and the &quot;</span>
+                                    <span class="s">&quot;MyProxy server&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MyProxyClient.parseConfig"><a class="viewcode-back" href="../../client.html#myproxy.client.MyProxyClient.parseConfig">[docs]</a>    <span class="k">def</span> <span class="nf">parseConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="s">&#39;DEFAULT&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Extract parameters from _cfg config object&#39;&#39;&#39;</span>
@@ -613,7 +612,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Expecting string type for hostname attribute&quot;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">__hostname</span> <span class="o">=</span> <span class="n">val</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">val</span>
         
     <span class="n">hostname</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="n">_getHostname</span><span class="p">,</span>
                         <span class="n">fset</span><span class="o">=</span><span class="n">_setHostname</span><span class="p">,</span>
@@ -643,7 +642,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;Expecting string type for serverDN attribute&quot;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">__serverDN</span> <span class="o">=</span> <span class="n">val</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span><span class="o">.</span><span class="n">certDN</span> <span class="o">=</span> <span class="n">val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span><span class="o">.</span><span class="n">certDN</span> <span class="o">=</span> <span class="n">val</span>
     
     <span class="n">serverDN</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">fget</span><span class="o">=</span><span class="n">_getServerDN</span><span class="p">,</span>
                         <span class="n">fset</span><span class="o">=</span><span class="n">_setServerDN</span><span class="p">,</span>
@@ -769,8 +768,8 @@
         <span class="k">if</span> <span class="n">verifyPeerWithTrustRoots</span><span class="p">:</span>
             <span class="n">context</span><span class="o">.</span><span class="n">load_verify_locations</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">caCertDir</span><span class="p">)</span>
                 
-            <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span>
-            <span class="n">verify_cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__serverSSLCertVerify</span><span class="o">.</span><span class="n">get_verify_server_cert_func</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span>
+            <span class="n">verify_cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ssl_verification</span><span class="o">.</span><span class="n">get_verify_server_cert_func</span><span class="p">()</span>
             
             <span class="c"># Verify peer&#39;s (MyProxy server) certificate</span>
             <span class="n">context</span><span class="o">.</span><span class="n">set_verify</span><span class="p">(</span><span class="n">SSL</span><span class="o">.</span><span class="n">VERIFY_PEER</span><span class="p">,</span> <span class="n">verify_cb</span><span class="p">)</span>
@@ -816,8 +815,8 @@
 <span class="sd">        :type nBitsForKey: int</span>
 <span class="sd">        :param nBitsForKey: number of bits for private key generation - </span>
 <span class="sd">        default is 2048</span>
-<span class="sd">        @rtype: OpenSSL.crypto.PKey</span>
-<span class="sd">        @return: public/private key pair</span>
+<span class="sd">        :rtype: OpenSSL.crypto.PKey</span>
+<span class="sd">        :return: public/private key pair</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">keyPair</span> <span class="o">=</span> <span class="n">crypto</span><span class="o">.</span><span class="n">PKey</span><span class="p">()</span>
         <span class="n">keyPair</span><span class="o">.</span><span class="n">generate_key</span><span class="p">(</span><span class="n">crypto</span><span class="o">.</span><span class="n">TYPE_RSA</span><span class="p">,</span> <span class="n">nBitsForKey</span><span class="p">)</span>
@@ -834,8 +833,8 @@
 <span class="sd">        :param keyPair: public/private key pair</span>
 <span class="sd">        :type messageDigest: basestring</span>
 <span class="sd">        :param messageDigest: message digest type - default is MD5</span>
-<span class="sd">        @rtype: base string</span>
-<span class="sd">        @return certificate request PEM text and private key PEM text</span>
+<span class="sd">        :rtype: base string</span>
+<span class="sd">        :return certificate request PEM text and private key PEM text</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="c"># Check all required certifcate request DN parameters are set                </span>
@@ -858,10 +857,10 @@
 <span class="sd">        Deserialize a MyProxy server response</span>
 <span class="sd">        </span>
 <span class="sd">        :param msg: string response message from MyProxy server</span>
-<span class="sd">        @return: tuple of integer response and errorTxt string (if any) and all </span>
+<span class="sd">        :return: tuple of integer response and errorTxt string (if any) and all </span>
 <span class="sd">        the fields parsed.  fields is a list of two element, field name, field </span>
 <span class="sd">        value tuples.</span>
-<span class="sd">        @rtype: tuple</span>
+<span class="sd">        :rtype: tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>  
         <span class="n">lines</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -897,7 +896,7 @@
 <span class="sd">        :param inputDat: string containing the proxy cert and private key</span>
 <span class="sd">        and signing cert all in DER format</span>
 <span class="sd">        </span>
-<span class="sd">        @return list containing the equivalent to the input in PEM format&quot;&quot;&quot;</span>
+<span class="sd">        :return list containing the equivalent to the input in PEM format&quot;&quot;&quot;</span>
         <span class="n">pemCerts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">dat</span> <span class="o">=</span> <span class="n">inputDat</span>
         
@@ -929,9 +928,9 @@
 <span class="sd">        :param enableTmpFileLoc: enable setting based on /tmp/x509up_&lt;uid&gt;,</span>
 <span class="sd">        defaults to False</span>
 <span class="sd">        :type enableTmpFileLoc: bool</span>
-<span class="sd">        @return: private key and certificate file location to use based on the</span>
+<span class="sd">        :return: private key and certificate file location to use based on the</span>
 <span class="sd">        current environment</span>
-<span class="sd">        @rtype: tuple</span>
+<span class="sd">        :rtype: tuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sslKeyFile</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">sslCertFile</span> <span class="o">=</span> <span class="bp">None</span>
@@ -1009,8 +1008,8 @@
         <span class="sd">&quot;&quot;&quot;Read proxy cert file following the format used by myproxy-logon - </span>
 <span class="sd">        proxy, cert, private key, user cert.</span>
 <span class="sd">        </span>
-<span class="sd">        @rtype: tuple</span>
-<span class="sd">        @return: tuple containing proxy cert, private key, user cert&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: tuple containing proxy cert, private key, user cert&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">filePath</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">filePath</span> <span class="o">=</span> <span class="n">MyProxyClient</span><span class="o">.</span><span class="n">DEF_PROXY_FILEPATH</span>
             
@@ -1153,11 +1152,14 @@
 <span class="sd">        of the stored credentials.  Only the owner can later remove </span>
 <span class="sd">        credentials with myproxy-destroy or the destroy method.  If not set,</span>
 <span class="sd">        this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem </span>
+<span class="sd">        </span>
 <span class="sd">        :param sslKeyFile: corresponding private key file.  See explanation</span>
 <span class="sd">        for sslCertFile</span>
+<span class="sd">        </span>
 <span class="sd">        :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the</span>
 <span class="sd">        private key is not password protected.  </span>
-<span class="sd">        @return none</span>
+<span class="sd">        </span>
+<span class="sd">        :return none</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">globusLoc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">MyProxyClient</span><span class="o">.</span><span class="n">GLOBUS_LOCATION_ENVVARNAME</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sslCertFile</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">sslKeyFile</span><span class="p">:</span>
@@ -1213,7 +1215,7 @@
 <span class="sd">        for sslCertFile</span>
 <span class="sd">        :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the</span>
 <span class="sd">        private key is not password protected.  </span>
-<span class="sd">        @return none</span>
+<span class="sd">        :return none</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">globusLoc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">MyProxyClient</span><span class="o">.</span><span class="n">GLOBUS_LOCATION_ENVVARNAME</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sslCertFile</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">sslKeyFile</span><span class="p">:</span>
@@ -1265,8 +1267,9 @@
 <span class="sd">        :type username: string</span>
 <span class="sd">        :param username: username selected for new credential</span>
 <span class="sd">        :type passphrase: string</span>
-<span class="sd">        :param passphrase: pass-phrase for new credential.  This is the pass</span>
+<span class="sd">        :param passphrase: pass-phrase for new credential.  This is the pass </span>
 <span class="sd">        phrase which protects keyfile.</span>
+<span class="sd">        </span>
 <span class="sd">        :type certFile: string</span>
 <span class="sd">        :param certFile: user&#39;s X.509 certificate in PEM format</span>
 <span class="sd">        :type keyFile: string</span>
@@ -1404,8 +1407,8 @@
 <span class="sd">        ignored if a key pair is passed in from an external source via the</span>
 <span class="sd">        keyPair keyword</span>
 <span class="sd">        </span>
-<span class="sd">        @rtype: tuple</span>
-<span class="sd">        @return credentials as strings in PEM format: the</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return credentials as strings in PEM format: the</span>
 <span class="sd">        user certificate, it&#39;s private key and the issuing certificate.  The</span>
 <span class="sd">        issuing certificate is only set if the user certificate is a proxy</span>
 <span class="sd">        </span>
@@ -1593,9 +1596,9 @@
 <span class="sd">        verify server SSL certificate against CA certificates held in location</span>
 <span class="sd">        set by the &quot;caCertDir&quot; attribute.</span>
 <span class="sd">        </span>
-<span class="sd">        @return: trust root files as a dictionary keyed by file name with each </span>
+<span class="sd">        :return: trust root files as a dictionary keyed by file name with each </span>
 <span class="sd">        item value set to the file contents</span>
-<span class="sd">        @rtype: dict</span>
+<span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">bootstrap</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Bootstrapping MyProxy server root of trust.&#39;</span><span class="p">)</span>

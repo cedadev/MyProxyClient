@@ -236,12 +236,26 @@ reference only</p>
 <p>the MyProxy server SSL connection.  This ID will be set as the owner
 of the stored credentials.  Only the owner can later remove 
 credentials with myproxy-destroy or the destroy method.  If not set,
-this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem 
-:param sslKeyFile: corresponding private key file.  See explanation
-for sslCertFile
-:param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
-private key is not password protected.  
-&#64;return none</p>
+this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sslKeyFile</strong> &#8211; corresponding private key file.  See explanation</td>
+</tr>
+</tbody>
+</table>
+<p>for sslCertFile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sslKeyFilePassphrase</strong> &#8211; passphrase for sslKeyFile.  Omit if the</td>
+</tr>
+</tbody>
+</table>
+<p>private key is not password protected.</p>
+<p>:return none</p>
 </dd></dl>
 
 <dl class="method">
@@ -274,7 +288,7 @@ this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem
 for sslCertFile
 :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
 private key is not password protected.  
-&#64;return none</p>
+:return none</p>
 </dd></dl>
 
 <dl class="method">
@@ -321,9 +335,16 @@ private key is not password protected.
 against any CA certificates.  Set to False, for default behaviour:
 verify server SSL certificate against CA certificates held in location
 set by the &#8220;caCertDir&#8221; attribute.</p>
-<p>&#64;return: trust root files as a dictionary keyed by file name with each 
-item value set to the file contents
-&#64;rtype: dict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">trust root files as a dictionary keyed by file name with each</td>
+</tr>
+</tbody>
+</table>
+<p>item value set to the file contents
+:rtype: dict</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -383,9 +404,9 @@ that MyProxy/Globus support</p>
 </table>
 <p>defaults to False
 :type enableTmpFileLoc: bool
-&#64;return: private key and certificate file location to use based on the
+:return: private key and certificate file location to use based on the
 current environment
-&#64;rtype: tuple</p>
+:rtype: tuple</p>
 </dd></dl>
 
 <dl class="method">
@@ -448,9 +469,18 @@ current environment
 <p>defaults to the PRIKEY_NBITS class variable setting.  This keyword is
 ignored if a key pair is passed in from an external source via the
 keyPair keyword</p>
-<p>&#64;rtype: tuple
-&#64;return credentials as strings in PEM format: the
-user certificate, it&#8217;s private key and the issuing certificate.  The
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Return credentials as strings in PEM format:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">the</td>
+</tr>
+</tbody>
+</table>
+<p>user certificate, it&#8217;s private key and the issuing certificate.  The
 issuing certificate is only set if the user certificate is a proxy</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -584,20 +614,22 @@ credentials in seconds. defaults to proxyCertMaxLifetime attribute value</p>
 <em class="property">classmethod </em><code class="descname">readProxyFile</code><span class="sig-paren">(</span><em>filePath=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/myproxy/client.html#MyProxyClient.readProxyFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#myproxy.client.MyProxyClient.readProxyFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read proxy cert file following the format used by myproxy-logon - 
 proxy, cert, private key, user cert.</p>
-<p>&#64;rtype: tuple
-&#64;return: tuple containing proxy cert, private key, user cert</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple containing proxy cert, private key, user cert</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="myproxy.client.MyProxyClient.serverDN">
 <code class="descname">serverDN</code><a class="headerlink" href="#myproxy.client.MyProxyClient.serverDN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Distinguished Name for MyProxy Server Certificate</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="myproxy.client.MyProxyClient.serverSSLCertVerify">
-<code class="descname">serverSSLCertVerify</code><a class="headerlink" href="#myproxy.client.MyProxyClient.serverSSLCertVerify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class with a __call__ method which is passed to the SSL context to verify the peer (MyProxy server) certificate in the SSL handshake between this client and the MyProxy server</p>
 </dd></dl>
 
 <dl class="method">
@@ -607,6 +639,12 @@ proxy, cert, private key, user cert.</p>
 certificates for verifying the MyProxy server&#8217;s SSL certificate.</p>
 <p>The setting is made by using standard Globus defined locations and
 environment variable settings</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="myproxy.client.MyProxyClient.ssl_verification">
+<code class="descname">ssl_verification</code><a class="headerlink" href="#myproxy.client.MyProxyClient.ssl_verification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class with a method which is passed to the SSL context to verify the peer (MyProxy server) certificate in the SSL handshake between this client and the MyProxy server</p>
 </dd></dl>
 
 <dl class="method">
@@ -631,14 +669,21 @@ environment variable settings</p>
 </tr>
 </tbody>
 </table>
-<p>phrase which protects keyfile.
-:type certFile: string
-:param certFile: user&#8217;s X.509 certificate in PEM format
-:type keyFile: string
-:param keyFile: equivalent private key file in PEM format
-:type sslCertFile: string
-:param sslCertFile: certificate used for client authentication with
-the MyProxy server SSL connection.  This ID will be set as the owner
+<p>phrase which protects keyfile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>certFile</strong> (<em>string</em>) &#8211; user&#8217;s X.509 certificate in PEM format</li>
+<li><strong>keyFile</strong> (<em>string</em>) &#8211; equivalent private key file in PEM format</li>
+<li><strong>sslCertFile</strong> (<em>string</em>) &#8211; certificate used for client authentication with</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>the MyProxy server SSL connection.  This ID will be set as the owner
 of the stored credentials.  Only the owner can later remove 
 credentials with myproxy-destroy or the destroy method.  If not set,
 this argument defaults to $GLOBUS_LOCATION/etc/hostcert.pem or if this

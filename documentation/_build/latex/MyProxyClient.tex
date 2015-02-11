@@ -15,7 +15,7 @@
 
 
 \title{MyProxyClient Documentation}
-\date{February 05, 2015}
+\date{February 11, 2015}
 \release{1.4.0}
 \author{P J Kershaw}
 \newcommand{\sphinxlogo}{}
@@ -126,7 +126,8 @@
 
 
 This a pure* Python implementation of a client to the MyProxy Credential
-Management Server (\href{http://grid.ncsa.uiuc.edu/myproxy/}{http://grid.ncsa.uiuc.edu/myproxy/})
+Management Server (\href{http://grid.ncsa.uiuc.edu/myproxy/}{http://grid.ncsa.uiuc.edu/myproxy/}).  It provides both a
+Python API and a command line interface.
 \begin{itemize}
 \item {} 
 i.e. MyProxy C client libraries are not required for this package.
@@ -136,11 +137,25 @@ i.e. MyProxy C client libraries are not required for this package.
 It uses pyOpenSSL to make an SSL connection to the server following the
 messaging interface as outlined in: \href{http://grid.ncsa.uiuc.edu/myproxy/protocol/}{http://grid.ncsa.uiuc.edu/myproxy/protocol/}
 
-The code is based on an original program myproxy\_logon by Tom Uram of ANL.
+The code is based on an original program \code{myproxy\_logon} by Tom Uram of ANL.
+
+
+\chapter{Examples}
+\label{README:examples}\label{README:myproxy-client-package}
+These show how to retrieve a certificate bootstrapping trust in remote service.
+
+API:
+\textgreater{}\textgreater{}\textgreater{} from myproxy.client import MyProxyClient
+\textgreater{}\textgreater{}\textgreater{} myproxy\_clnt = MyProxyClient(hostname=''myproxy.somewhere.ac.uk'')
+\textgreater{}\textgreater{}\textgreater{} cert, private\_key = myproxy\_clnt.logon(username, password, bootstrap=True)
+
+Command line interface:
+
+\code{\$ myproxyclient logon -s myproxy.somewhere.ac.uk -l \textless{}username\textgreater{} -o creds.pem -b}
 
 
 \chapter{Releases}
-\label{README:releases}\label{README:myproxy-client-package}
+\label{README:releases}
 1.4.0
 \begin{itemize}
 \item {} 
@@ -394,12 +409,23 @@ change pass-phrase protecting the credentials for a given username
 the MyProxy server SSL connection.  This ID will be set as the owner
 of the stored credentials.  Only the owner can later remove 
 credentials with myproxy-destroy or the destroy method.  If not set,
-this argument defaults to \$GLOBUS\_LOCATION/etc/hostcert.pem 
-:param sslKeyFile: corresponding private key file.  See explanation
+this argument defaults to \$GLOBUS\_LOCATION/etc/hostcert.pem
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{\texttt{sslKeyFile}} -- corresponding private key file.  See explanation
+
+\end{description}\end{quote}
+
 for sslCertFile
-:param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
-private key is not password protected.  
-@return none
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{\texttt{sslKeyFilePassphrase}} -- passphrase for sslKeyFile.  Omit if the
+
+\end{description}\end{quote}
+
+private key is not password protected.
+
+:return none
 
 \end{fulllineitems}
 
@@ -437,7 +463,7 @@ this argument defaults to \$GLOBUS\_LOCATION/etc/hostcert.pem
 for sslCertFile
 :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the
 private key is not password protected.  
-@return none
+:return none
 
 \end{fulllineitems}
 
@@ -484,10 +510,14 @@ MyProxy server without verification of the server's SSL certificate
 against any CA certificates.  Set to False, for default behaviour:
 verify server SSL certificate against CA certificates held in location
 set by the ``caCertDir'' attribute.
+\begin{quote}\begin{description}
+\item[{Returns}] \leavevmode
+trust root files as a dictionary keyed by file name with each
 
-@return: trust root files as a dictionary keyed by file name with each 
+\end{description}\end{quote}
+
 item value set to the file contents
-@rtype: dict
+:rtype: dict
 
 \end{fulllineitems}
 
@@ -554,9 +584,9 @@ that MyProxy/Globus support
 
 defaults to False
 :type enableTmpFileLoc: bool
-@return: private key and certificate file location to use based on the
+:return: private key and certificate file location to use based on the
 current environment
-@rtype: tuple
+:rtype: tuple
 
 \end{fulllineitems}
 
@@ -616,9 +646,15 @@ created along with a key pair
 defaults to the PRIKEY\_NBITS class variable setting.  This keyword is
 ignored if a key pair is passed in from an external source via the
 keyPair keyword
+\begin{quote}\begin{description}
+\item[{Return type}] \leavevmode
+tuple
 
-@rtype: tuple
-@return credentials as strings in PEM format: the
+\item[{Return credentials as strings in PEM format}] \leavevmode
+the
+
+\end{description}\end{quote}
+
 user certificate, it's private key and the issuing certificate.  The
 issuing certificate is only set if the user certificate is a proxy
 \begin{quote}\begin{description}
@@ -765,9 +801,14 @@ credentials in seconds. defaults to proxyCertMaxLifetime attribute value
 \phantomsection\label{client:myproxy.client.MyProxyClient.readProxyFile}\pysiglinewithargsret{\strong{classmethod }\bfcode{readProxyFile}}{\emph{filePath=None}}{}
 Read proxy cert file following the format used by myproxy-logon - 
 proxy, cert, private key, user cert.
+\begin{quote}\begin{description}
+\item[{Return type}] \leavevmode
+tuple
 
-@rtype: tuple
-@return: tuple containing proxy cert, private key, user cert
+\item[{Returns}] \leavevmode
+tuple containing proxy cert, private key, user cert
+
+\end{description}\end{quote}
 
 \end{fulllineitems}
 
@@ -776,14 +817,6 @@ proxy, cert, private key, user cert.
 \begin{fulllineitems}
 \phantomsection\label{client:myproxy.client.MyProxyClient.serverDN}\pysigline{\bfcode{serverDN}}
 Distinguished Name for MyProxy Server Certificate
-
-\end{fulllineitems}
-
-\index{serverSSLCertVerify (myproxy.client.MyProxyClient attribute)}
-
-\begin{fulllineitems}
-\phantomsection\label{client:myproxy.client.MyProxyClient.serverSSLCertVerify}\pysigline{\bfcode{serverSSLCertVerify}}
-Class with a \_\_call\_\_ method which is passed to the SSL context to verify the peer (MyProxy server) certificate in the SSL handshake between this client and the MyProxy server
 
 \end{fulllineitems}
 
@@ -796,6 +829,14 @@ certificates for verifying the MyProxy server's SSL certificate.
 
 The setting is made by using standard Globus defined locations and
 environment variable settings
+
+\end{fulllineitems}
+
+\index{ssl\_verification (myproxy.client.MyProxyClient attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{client:myproxy.client.MyProxyClient.ssl_verification}\pysigline{\bfcode{ssl\_verification}}
+Class with a method which is passed to the SSL context to verify the peer (MyProxy server) certificate in the SSL handshake between this client and the MyProxy server
 
 \end{fulllineitems}
 
@@ -826,12 +867,21 @@ Upload credentials to the server
 \end{description}\end{quote}
 
 phrase which protects keyfile.
-:type certFile: string
-:param certFile: user's X.509 certificate in PEM format
-:type keyFile: string
-:param keyFile: equivalent private key file in PEM format
-:type sslCertFile: string
-:param sslCertFile: certificate used for client authentication with
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{\texttt{certFile}} (\emph{string}) -- user's X.509 certificate in PEM format
+
+\item {} 
+\textbf{\texttt{keyFile}} (\emph{string}) -- equivalent private key file in PEM format
+
+\item {} 
+\textbf{\texttt{sslCertFile}} (\emph{string}) -- certificate used for client authentication with
+
+\end{itemize}
+
+\end{description}\end{quote}
+
 the MyProxy server SSL connection.  This ID will be set as the owner
 of the stored credentials.  Only the owner can later remove 
 credentials with myproxy-destroy or the destroy method.  If not set,
@@ -888,9 +938,6 @@ passed direct into this method
 \label{README:indices-and-tables}\begin{itemize}
 \item {} 
 \emph{genindex}
-
-\item {} 
-\emph{modindex}
 
 \item {} 
 \emph{search}

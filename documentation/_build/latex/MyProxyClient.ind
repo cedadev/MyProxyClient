@@ -2,61 +2,61 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter C
-  \item caCertDir (myproxy.client.MyProxyClient attribute), \hyperpage{6}
-  \item changePassphrase() (myproxy.client.MyProxyClient method), \hyperpage{6}
+  \item caCertDir (myproxy.client.MyProxyClient attribute), \hyperpage{8}
+  \item changePassphrase() (myproxy.client.MyProxyClient method), \hyperpage{8}
 
   \indexspace
   \bigletter D
-  \item destroy() (myproxy.client.MyProxyClient method), \hyperpage{7}
+  \item destroy() (myproxy.client.MyProxyClient method), \hyperpage{9}
 
   \indexspace
   \bigletter G
-  \item getDelegation() (myproxy.client.MyProxyClient method), \hyperpage{7}
-  \item getTrustRoots() (myproxy.client.MyProxyClient method), \hyperpage{7}
+  \item getDelegation() (myproxy.client.MyProxyClient method), \hyperpage{9}
+  \item getTrustRoots() (myproxy.client.MyProxyClient method), \hyperpage{9}
 
   \indexspace
   \bigletter H
-  \item hostname (myproxy.client.MyProxyClient attribute), \hyperpage{8}
+  \item hostname (myproxy.client.MyProxyClient attribute), \hyperpage{10}
 
   \indexspace
   \bigletter I
-  \item info() (myproxy.client.MyProxyClient method), \hyperpage{8}
+  \item info() (myproxy.client.MyProxyClient method), \hyperpage{10}
 
   \indexspace
   \bigletter L
-  \item locateClientCredentials() (myproxy.client.MyProxyClient class method), \hyperpage{8}
-  \item logon() (myproxy.client.MyProxyClient method), \hyperpage{8}
+  \item locateClientCredentials() (myproxy.client.MyProxyClient class method), \hyperpage{10}
+  \item logon() (myproxy.client.MyProxyClient method), \hyperpage{10}
 
   \indexspace
   \bigletter M
-  \item MyProxyClient (class in myproxy.client), \hyperpage{5}
+  \item MyProxyClient (class in myproxy.client), \hyperpage{7}
 
   \indexspace
   \bigletter O
-  \item openSSLConfFilePath (myproxy.client.MyProxyClient attribute), \hyperpage{9}
-  \item openSSLConfig (myproxy.client.MyProxyClient attribute), \hyperpage{9}
+  \item openSSLConfFilePath (myproxy.client.MyProxyClient attribute), \hyperpage{11}
+  \item openSSLConfig (myproxy.client.MyProxyClient attribute), \hyperpage{11}
 
   \indexspace
   \bigletter P
-  \item parseConfig() (myproxy.client.MyProxyClient method), \hyperpage{9}
-  \item port (myproxy.client.MyProxyClient attribute), \hyperpage{9}
-  \item proxyCertLifetime (myproxy.client.MyProxyClient attribute), \hyperpage{9}
-  \item proxyCertMaxLifetime (myproxy.client.MyProxyClient attribute), \hyperpage{9}
-  \item put() (myproxy.client.MyProxyClient method), \hyperpage{9}
+  \item parseConfig() (myproxy.client.MyProxyClient method), \hyperpage{11}
+  \item port (myproxy.client.MyProxyClient attribute), \hyperpage{11}
+  \item proxyCertLifetime (myproxy.client.MyProxyClient attribute), \hyperpage{11}
+  \item proxyCertMaxLifetime (myproxy.client.MyProxyClient attribute), \hyperpage{11}
+  \item put() (myproxy.client.MyProxyClient method), \hyperpage{11}
 
   \indexspace
   \bigletter R
-  \item readProxyFile() (myproxy.client.MyProxyClient class method), \hyperpage{10}
+  \item readProxyFile() (myproxy.client.MyProxyClient class method), \hyperpage{12}
 
   \indexspace
   \bigletter S
-  \item serverDN (myproxy.client.MyProxyClient attribute), \hyperpage{10}
-  \item serverSSLCertVerify (myproxy.client.MyProxyClient attribute), \hyperpage{10}
-  \item setDefaultCACertDir() (myproxy.client.MyProxyClient method), \hyperpage{10}
-  \item store() (myproxy.client.MyProxyClient method), \hyperpage{10}
+  \item serverDN (myproxy.client.MyProxyClient attribute), \hyperpage{12}
+  \item setDefaultCACertDir() (myproxy.client.MyProxyClient method), \hyperpage{12}
+  \item ssl\_verification (myproxy.client.MyProxyClient attribute), \hyperpage{12}
+  \item store() (myproxy.client.MyProxyClient method), \hyperpage{12}
 
   \indexspace
   \bigletter W
-  \item writeProxyFile() (myproxy.client.MyProxyClient class method), \hyperpage{10}
+  \item writeProxyFile() (myproxy.client.MyProxyClient class method), \hyperpage{13}
 
 \end{theindex}
