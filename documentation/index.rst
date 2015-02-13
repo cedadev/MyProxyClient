@@ -31,7 +31,7 @@ Command line interface:
 
 Releases
 --------
-1.4.1
+1.4.3
 
  * Fix for SSL to use TLS instead of SSLv3 to address POODLE vulnerability
  * Fix for SSL verification for PyOpenSSL version 0.14 - v1.3.1 was broken
