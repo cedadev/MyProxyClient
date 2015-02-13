@@ -27,25 +27,34 @@ except ImportError:
 
 import os
 THIS_DIR = os.path.dirname(__file__)
-README = open(os.path.join(THIS_DIR, 'README.md')).read()
+
+# Read succeeds for sdist creation but fails for build with pip install.  Added
+# catch here for latter case.
+try:
+    LONG_DESCR = open(os.path.join(THIS_DIR, 'README.md')).read()
+except IOError:
+    LONG_DESCR = ('Python implementation of a client to the MyProxy '
+        'Credential Management Server (http://grid.ncsa.uiuc.edu/myproxy/) ')
 
 setup(
     name =            	'MyProxyClient',
     version =         	'1.4.2',
     description =     	'MyProxy Client',
-    long_description = 	README,
+    long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',
     author_email =    	'Philip.Kershaw@stfc.ac.uk',
     maintainer =        'Philip Kershaw',
     maintainer_email =  'Philip.Kershaw@stfc.ac.uk',
     url =             	'https://github.com/cedadev/MyProxyClient',
     platforms =         ['POSIX', 'Linux', 'Windows'],
-    install_requires =  ['PyOpenSSL'],
+    install_requires =  ['pyOpenSSL'],
     license =           __license__,
     test_suite =        'myproxy.test',
     packages =          find_packages(),
+    include_package_data = True,
     package_data =      {
-        'myproxy.test': ['*.cfg', '*.conf', '*.crt', '*.key', 'README.md']
+        '': ['README.md'],
+        'myproxy.test': ['*.cfg', '*.conf', '*.crt', '*.key', 'README']
     },
     classifiers = [
         'Development Status :: 5 - Production/Stable',
