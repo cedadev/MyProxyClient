@@ -45,7 +45,7 @@ setup(
     test_suite =        'myproxy.test',
     packages =          find_packages(),
     package_data =      {
-        'myproxy.test': ['*.cfg', '*.conf', '*.crt', '*.key', 'README']
+        'myproxy.test': ['*.cfg', '*.conf', '*.crt', '*.key', 'README.md']
     },
     classifiers = [
         'Development Status :: 5 - Production/Stable',
