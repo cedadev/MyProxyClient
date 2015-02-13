@@ -31,7 +31,7 @@ README = open(os.path.join(THIS_DIR, 'README.md')).read()
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'1.4.1',
+    version =         	'1.4.2',
     description =     	'MyProxy Client',
     long_description = 	README,
     author =          	'Philip Kershaw',
