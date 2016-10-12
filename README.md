@@ -32,6 +32,10 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+1.4.4
+-----
+ * Minor changes for ready for inclusion in conda-forge.  Thanks to Alex Goodman.
+
 1.4.3
 -----
  * Fix for SSL to use TLS instead of SSLv3 to address POODLE vulnerability
