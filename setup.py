@@ -33,8 +33,10 @@ THIS_DIR = os.path.dirname(__file__)
 try:
     LONG_DESCR = open(os.path.join(THIS_DIR, 'README.md')).read()
 except IOError:
-    LONG_DESCR = ('Python implementation of a client to the MyProxy '
-        'Credential Management Server (http://grid.ncsa.uiuc.edu/myproxy/) ')
+    LONG_DESCR = (
+        'Python implementation of a client to the MyProxy Credential Management '
+        'Server (http://grid.ncsa.uiuc.edu/myproxy/) '
+    )
 
 setup(
     name =            	'MyProxyClient',
