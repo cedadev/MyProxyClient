@@ -32,6 +32,7 @@ THIS_DIR = os.path.dirname(__file__)
 # catch here for latter case.
 try:
     LONG_DESCR = open(os.path.join(THIS_DIR, 'README.md')).read()
+
 except IOError:
     LONG_DESCR = (
         'Python implementation of a client to the MyProxy Credential Management '
