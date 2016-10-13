@@ -8,11 +8,11 @@ __date__ = "12/12/08"
 __copyright__ = "(C) 2011 Science and Technology Facilities Council"
 __license__ = """BSD - See LICENSE file in top-level directory
 
-Software adapted from myproxy_logon.  - For myproxy_logon see Access Grid 
+Software adapted from myproxy_logon.  - For myproxy_logon see Access Grid
 Toolkit Public License (AGTPL)
 
-This product includes software developed by and/or derived from the Access 
-Grid Project (http://www.accessgrid.org) to which the U.S. Government retains 
+This product includes software developed by and/or derived from the Access
+Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
 __revision__ = '$Id$'
@@ -38,7 +38,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'1.4.3',
+    version =         	'1.4.4',
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',
@@ -54,6 +54,7 @@ setup(
     include_package_data = True,
     package_data =      {
         '': ['README.md'],
+        'myproxy': ['LICENSE'],
         'myproxy.test': ['*.cfg', '*.conf', '*.crt', '*.key', 'README']
     },
     classifiers = [
@@ -64,7 +65,7 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: GNU Library or Lesser General Public License (BSD)',
+        'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
