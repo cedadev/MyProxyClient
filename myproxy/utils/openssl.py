@@ -11,7 +11,7 @@ __contact__ = "Philip.Kershaw@stfc.ac.uk"
 __revision__ = '$Id:openssl.py 4643 2008-12-15 14:53:53Z pjkersha $'
 import re
 import os
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 
 class OpenSSLConfigError(Exception):
@@ -77,7 +77,7 @@ class OpenSSLConfig(SafeConfigParser, object):
         @type filePath: string
         @param filePath: path for OpenSSL configuration file"""
         if filePath is not None:
-            if not isinstance(filePath, basestring):
+            if not isinstance(filePath, str):
                 raise OpenSSLConfigError("Input OpenSSL config file path must "
                                          "be a string")
 
@@ -85,7 +85,7 @@ class OpenSSLConfig(SafeConfigParser, object):
                 if not os.access(filePath, os.R_OK):
                     raise OpenSSLConfigError("Not found or no read access")
                                          
-            except Exception, e:
+            except Exception as e:
                 raise OpenSSLConfigError("OpenSSL config file path is not "
                                          'valid: "%s": %s' % (filePath, e))
                     
@@ -113,7 +113,7 @@ class OpenSSLConfig(SafeConfigParser, object):
             else:
                 self._caDir = None
         else:
-            if not isinstance(caDir, basestring):
+            if not isinstance(caDir, str):
                 raise OpenSSLConfigError("Input OpenSSL CA directory path "
                                          "must be a string")
 
@@ -121,7 +121,7 @@ class OpenSSLConfig(SafeConfigParser, object):
                 if not os.access(caDir, os.R_OK):
                     raise OpenSSLConfigError("Not found or no read access")
                                          
-            except Exception, e:
+            except Exception as e:
                 raise OpenSSLConfigError("OpenSSL CA directory path is not "
                                          'valid: "%s": %s' % (caDir, e))
                     
@@ -178,7 +178,7 @@ class OpenSSLConfig(SafeConfigParser, object):
         try:
             config_file = open(self._filePath)
             fileTxt = config_file.read()
-        except Exception, e:
+        except Exception as e:
             raise OpenSSLConfigError('Reading OpenSSL config file "%s": %s' % 
                                                     (self._filePath, e))
 
@@ -187,11 +187,11 @@ class OpenSSLConfig(SafeConfigParser, object):
         SafeConfigParser.readfp(self, config_file)
         
         # Filter section names and remove comments from options
-        for section, val in self._sections.items():
+        for section, val in list(self._sections.items()):
             newSection = section
             self._sections[newSection.strip()] = \
                                     dict([(opt, self._filtOptVal(optVal))
-                                          for opt, optVal in val.items()])
+                                          for opt, optVal in list(val.items())])
             del self._sections[section]
        
         self._set_required_dn_params()
@@ -228,6 +228,6 @@ class OpenSSLConfig(SafeConfigParser, object):
                 'OU': self.get('req_distinguished_name', 
                                '0.organizationalUnitName_default')
             }
-        except Exception, e:
+        except Exception as e:
             raise OpenSSLConfigError('Setting content of Distinguished Name '
                                      'from file "%s": %s' % (self._filePath, e))
