@@ -887,11 +887,15 @@ value tuples.
 
         while dat:
             # find start of cert, get length
-            ind = dat.find('\x30\x82')
+            ind = dat.find(b'\x30\x82')
             if ind < 0:
                 break
 
-            length = 256*ord(dat[ind+2]) + ord(dat[ind+3])
+            if six.PY3:
+                length = 256*dat[ind+2] + dat[ind+3]
+            else:
+                length = 256*ord(dat[ind+2]) + ord(dat[ind+3])
+            
 
             # extract der-format cert, and convert to pem
             derCert = dat[ind:ind+length+4]
@@ -1513,7 +1517,10 @@ private key is not password protected.
         # process certificates
         # - 1st byte , number of certs
         dat = conn.recv(1)
-        nCerts = ord(dat[0])
+        if six.PY3:
+            nCerts = dat[0]
+        else:
+            nCerts = ord(dat[0])
 
         # - n certs
         dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)

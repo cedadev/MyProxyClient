@@ -144,11 +144,11 @@ class MyProxyClientLiveTestCase(_MyProxyClientTestCase):
 
         creds = self.clnt.getDelegation(thisSection['username'], passphrase)
         print("proxy credentials:")
-        print(''.join(creds))
-        with open(proxyCertFile, 'w') as proxy_cert_file:
-            proxy_cert_file.write(creds[0]+''.join(creds[2:]))
+        print(b''.join(creds))
+        with open(proxyCertFile, 'wb') as proxy_cert_file:
+            proxy_cert_file.write(creds[0]+b''.join(creds[2:]))
 
-        with open(proxyKeyFile, 'w') as proxy_key_file:
+        with open(proxyKeyFile, 'wb') as proxy_key_file:
             proxy_key_file.write(creds[1])
 
     def test04Info(self):
@@ -217,7 +217,7 @@ class MyProxyClientLiveTestCase(_MyProxyClientTestCase):
         creds = self.clnt.getDelegation(thisSection['username'], passphrase,
                                         bootstrap=True)
         print("proxy credentials:")
-        print(''.join(creds))
+        print(b''.join(creds))
 
     def test07Destroy(self):
         # destroy credentials for a given user
