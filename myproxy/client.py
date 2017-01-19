@@ -1,6 +1,6 @@
 """.. MyProxy Client interface
 
-Developed for the NERC DataGrid Project: http://ndg.nerc.ac.uk/
+Developed for the NERC DataGrid Project
 
 Major re-write of an original class.   This updated version implements methods
 with SSL calls with PyOpenSSL rather use calls to myproxy client executables as
@@ -774,7 +774,7 @@ roots mode available with logon and get trust roots calls
 
                 if keyFilePassphrase is not None:
                     context.set_passwd_cb(pwdCallback,
-                                          bytes(keyFilePassphrase, 'utf-8'))
+                                          _string2bytes(keyFilePassphrase))
 
                 context.use_privatekey_file(keyFile)
             except Exception:
@@ -895,7 +895,7 @@ value tuples.
                 length = 256*dat[ind+2] + dat[ind+3]
             else:
                 length = 256*ord(dat[ind+2]) + ord(dat[ind+3])
-            
+
 
             # extract der-format cert, and convert to pem
             derCert = dat[ind:ind+length+4]
