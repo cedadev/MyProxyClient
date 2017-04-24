@@ -32,6 +32,11 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+2.0.1
+-----
+ * Updated hashing algorithm to sha256 after reported errors interacting with
+   some servers
+
 2.0.0
 -----
  * Ported to Python 3.  This version is dual compatible with Python 2 and 3.
