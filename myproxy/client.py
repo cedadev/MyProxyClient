@@ -434,7 +434,7 @@ TRUSTED_CERTS=1"""
                                     or None)
 
     PRIKEY_NBITS = 4096
-    MESSAGE_DIGEST_TYPE = "md5"
+    MESSAGE_DIGEST_TYPE = "sha256"
     SERVER_RESP_BLK_SIZE = 8192
     MAX_RECV_TRIES = 1024
 
