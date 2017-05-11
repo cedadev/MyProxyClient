@@ -115,8 +115,13 @@ environment variable or ~/.globus/certificates or /etc/grid-security.
 
     op.add_option('-l', '--username', dest='username',
                   action='store', type='string',
-                  help=\
-        'Set username.  Defaults to "LOGNAME" environment variable setting.')
+                  help='Set username.  Defaults to "LOGNAME" environment '
+                       'variable setting.')
+
+    op.add_option('-e', '--error_trace', dest='error_trace',
+                  action='store_true',
+                  help='Display full stack trace for errors.  Default is to '
+                       'show single error message')
 
     op.set_defaults(
         outfile=None,
@@ -128,6 +133,7 @@ environment variable or ~/.globus/certificates or /etc/grid-security.
         trustroots=False,
         openid=None,
         username=None,
+        error_trace=False,
         stdin_pass=False,
         no_pass=False,
         )
@@ -220,7 +226,17 @@ def do_logon(myproxy, options):
                               bootstrap=options.bootstrap,
                               updateTrustRoots=options.trustroots)
     except MyProxyClientError as e:
-        raise SystemExit("Error retrieving credentials: {}".format(e))
+        if options.error_trace:
+            raise # Display full error trace
+        else:
+            raise SystemExit("MyProxy error retrieving credentials: "
+                             "{}".format(e))
+
+    except Exception as e:
+        if options.error_trace:
+            raise # Display full error trace
+        else:
+            raise SystemExit("Error retrieving credentials: {}".format(e))
 
     if options.outfile == '-':
         fout = sys.stdout
