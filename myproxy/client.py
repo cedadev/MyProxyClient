@@ -192,12 +192,12 @@ so that any error set upstream overrides and is honoured.
             raise TypeError('Expecting list or string type for "certDN" '
                             'attribute')
 
+        cert_dn_list.sort()
         if six.PY3:
-            cert_dn_list.sort()
             self.__certDN = [(bytes(i[0], 'utf-8'), bytes(i[1],'utf-8'))
                              for i in cert_dn_list]
         else:
-            self.__certDN = cert_dn_list.sort()
+            self.__certDN = cert_dn_list
 
     certDN = property(fget=_getCertDN,
                       fset=_setCertDN,

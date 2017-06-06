@@ -32,6 +32,12 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+2.0.2
+-----
+ * Added new command line option -e which will force output of any error trace.
+   The default is now that the error trace is not echoed.  Instead only the
+   message from top-level exception is included. 
+
 2.0.1
 -----
  * Updated hashing algorithm to sha256 after reported errors interacting with
