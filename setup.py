@@ -41,7 +41,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'2.0.2',
+    version =         	'2.0.3',
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',

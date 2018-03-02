@@ -32,6 +32,10 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+2.0.3
+-----
+ * Default to TLS v1.2 for security
+ 
 2.0.2
 -----
  * Added new command line option `-e` which will force output of any error
