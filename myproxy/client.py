@@ -353,7 +353,7 @@ reference only
 
     # Parametise SSL METHOD to allow later update if needed - set to TLSv1 to
     # address POODLE vulnerability
-    SSL_METHOD = SSL.TLSv1_METHOD
+    SSL_METHOD = SSL.TLSv1_2_METHOD
 
     MYPROXY_SERVER_ENVVARNAME = 'MYPROXY_SERVER'
     MYPROXY_SERVER_PORT_ENVVARNAME = 'MYPROXY_SERVER_PORT'

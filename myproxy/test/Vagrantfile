@@ -4,7 +4,7 @@
 # Vagrant configuration
 Vagrant.configure(2) do |config|
   # CentOS base box
-  config.vm.box = "box-cutter/centos68"
+  config.vm.box = "centos/6"
   config.vm.define "myproxy_server" do |myproxy_server|
   end
   config.vm.provider :virtualbox do |vb|
@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  #config.vm.synced_folder "/Users/philipkershaw/git/ceda-oauth-server", "/code/ceda-oauth-server"
+  #config.vm.synced_folder "/Users/pk23/git/ceda-oauth-server", "/code/ceda-oauth-server"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

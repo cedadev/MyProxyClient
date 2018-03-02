@@ -34,9 +34,11 @@ Releases
 ========
 2.0.2
 -----
- * Added new command line option -e which will force output of any error trace.
-   The default is now that the error trace is not echoed.  Instead only the
-   message from top-level exception is included. 
+ * Added new command line option `-e` which will force output of any error
+   trace.  The default is now that the error trace is not echoed.  Instead only
+   the message from top-level exception is included.
+ * Fix for certificate DN list for Python 2 version.  Thanks to Lukasz for
+   reporting the bug: https://github.com/cedadev/MyProxyClient/issues/12
 
 2.0.1
 -----
