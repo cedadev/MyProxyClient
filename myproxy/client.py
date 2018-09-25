@@ -10,7 +10,7 @@ program myproxy_logon by Tom Uram <turam@mcs.anl.gov>
 __author__ = "P J Kershaw"
 __date__ = "02/06/05"
 __copyright__ = "(C) 2010 Science and Technology Facilities Council"
-__license__ = """BSD - See LICENSE file in top-level directory
+__license__ = """BSD - See LICENSE file in top-level package directory
 
 For myproxy_logon see Access Grid Toolkit Public License (AGTPL)
 
@@ -18,10 +18,6 @@ This product includes software developed by and/or derived from the Access
 Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
-__revision__ = '$Id$'
-import logging
-log = logging.getLogger(__name__)
-
 import sys
 import os
 import socket
@@ -35,6 +31,9 @@ from OpenSSL import crypto, SSL
 
 from myproxy.utils.openssl import OpenSSLConfig
 from myproxy.utils import CaseSensitiveConfigParser
+
+import logging
+log = logging.getLogger(__name__)
 
 # String conversion utility for Python 3
 if six.PY3:
@@ -253,7 +252,7 @@ class MyProxyClient(object):
 
     :type SSL_METHOD: string
     :cvar SSL_METHOD: encryption method used for connecting to MyProxy server \
-- set to TLS version 1
+- set to TLS version 1.2
 
     :type MYPROXY_SERVER_ENVVARNAME: string
     :cvar MYPROXY_SERVER_ENVVARNAME: server environment variable name
@@ -351,8 +350,7 @@ Proxy certificate.  Not currently used by this class, included for \
 reference only
     """
 
-    # Parametise SSL METHOD to allow later update if needed - set to TLSv1 to
-    # address POODLE vulnerability
+    # Parametise SSL METHOD to allow later update if needed
     SSL_METHOD = SSL.TLSv1_2_METHOD
 
     MYPROXY_SERVER_ENVVARNAME = 'MYPROXY_SERVER'
@@ -490,10 +488,10 @@ TRUSTED_CERTS=1"""
         self.__port = None
         self.__serverDN = None
         self.__openSSLConfFilePath = None
-        self.__proxyCertMaxLifetime = MyProxyClient.PROPERTY_DEFAULTS[
-                                                        'proxyCertMaxLifetime']
-        self.__proxyCertLifetime = MyProxyClient.PROPERTY_DEFAULTS[
-                                                        'proxyCertLifetime']
+        self.__proxyCertMaxLifetime = self.PROPERTY_DEFAULTS[
+                                                    'proxyCertMaxLifetime']
+        self.__proxyCertLifetime = self.PROPERTY_DEFAULTS[
+                                                    'proxyCertLifetime']
         self.__caCertDir = None
 
         self.__cfg = None
@@ -503,17 +501,16 @@ TRUSTED_CERTS=1"""
         self.__openSSLConfig = OpenSSLConfig()
 
         # Server host name - take from environment variable if available
-        self.hostname = os.environ.get(MyProxyClient.MYPROXY_SERVER_ENVVARNAME,
-                                    MyProxyClient.PROPERTY_DEFAULTS['hostname'])
+        self.hostname = os.environ.get(self.MYPROXY_SERVER_ENVVARNAME,
+                                       self.PROPERTY_DEFAULTS['hostname'])
 
         # ... and port number
-        self.port = int(os.environ.get(
-                                MyProxyClient.MYPROXY_SERVER_PORT_ENVVARNAME,
-                                MyProxyClient.PROPERTY_DEFAULTS['port']))
+        self.port = int(os.environ.get(self.MYPROXY_SERVER_PORT_ENVVARNAME,
+                                       self.PROPERTY_DEFAULTS['port']))
 
         # Server Distinguished Name
-        serverDN = os.environ.get(MyProxyClient.MYPROXY_SERVER_DN_ENVVARNAME,
-                                  MyProxyClient.PROPERTY_DEFAULTS['serverDN'])
+        serverDN = os.environ.get(self.MYPROXY_SERVER_DN_ENVVARNAME,
+                                  self.PROPERTY_DEFAULTS['serverDN'])
         if serverDN is not None:
             self.serverDN = serverDN
 
@@ -539,18 +536,17 @@ TRUSTED_CERTS=1"""
         '''
 
         # Check for X509_CERT_DIR environment variable
-        x509CertDir = os.environ.get(MyProxyClient.X509_CERT_DIR_ENVVARNAME)
+        x509CertDir = os.environ.get(self.X509_CERT_DIR_ENVVARNAME)
         if x509CertDir is not None:
             self.caCertDir = x509CertDir
 
         # Check for running as root user
-        elif os.environ.get(MyProxyClient.ROOT_USERNAME) is not None:
-            self.caCertDir = MyProxyClient.ROOT_TRUSTROOT_DIR
+        elif os.environ.get(self.ROOT_USERNAME) is not None:
+            self.caCertDir = self.ROOT_TRUSTROOT_DIR
 
         # Default to non-root standard location
         else:
-            self.caCertDir = os.path.expanduser(
-                                            MyProxyClient.USER_TRUSTROOT_DIR)
+            self.caCertDir = os.path.expanduser(self.USER_TRUSTROOT_DIR)
 
     def _get_ssl_verification(self):
         return self.__ssl_verification
@@ -971,7 +967,7 @@ current environment
         :param filePath: set to override the default filePath"""
 
         if filePath is None:
-            filePath = MyProxyClient.DEF_PROXY_FILEPATH
+            filePath = cls.DEF_PROXY_FILEPATH
 
         if filePath is None:
             MyProxyClientConfigError("Error setting proxy file path - invalid "
@@ -981,7 +977,7 @@ current environment
         open(filePath, 'w').write(outStr)
         try:
             # Make sure permissions are set correctly
-            os.chmod(filePath, MyProxyClient.PROXY_FILE_PERMISSIONS)
+            os.chmod(filePath, cls.PROXY_FILE_PERMISSIONS)
 
         except OSError as e:
             # Don't leave the file lying around if couldn't change its
@@ -989,7 +985,7 @@ current environment
             os.unlink(filePath)
 
             log.error('Unable to set %o permissions for proxy file "%s": %s',
-                      MyProxyClient.PROXY_FILE_PERMISSIONS, filePath, e)
+                      cls.PROXY_FILE_PERMISSIONS, filePath, e)
             raise
 
     @classmethod
@@ -1000,7 +996,7 @@ current environment
         :rtype: tuple
         :return: tuple containing proxy cert, private key, user cert"""
         if filePath is None:
-            filePath = MyProxyClient.DEF_PROXY_FILEPATH
+            filePath = cls.DEF_PROXY_FILEPATH
 
         if filePath is None:
             MyProxyClientConfigError("Error setting proxy file path - invalid "
@@ -1085,13 +1081,13 @@ for sslCertFile
         :param sslKeyFilePassphrase: passphrase for sslKeyFile.  Omit if the \
 private key is not password protected.
         """
-        globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
+        globusLoc = os.environ.get(self.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile:
             if globusLoc:
                 sslCertFile = os.path.join(globusLoc,
-                                            *MyProxyClient.HOSTCERT_SUBDIRPATH)
+                                           *self.HOSTCERT_SUBDIRPATH)
                 sslKeyFile = os.path.join(globusLoc,
-                                            *MyProxyClient.HOSTKEY_SUBDIRPATH)
+                                          *self.HOSTKEY_SUBDIRPATH)
             else:
                 raise MyProxyClientError(
             "No client authentication cert. and private key file were given")
@@ -1107,11 +1103,11 @@ private key is not password protected.
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send info command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.INFO_CMD % _string2bytes(username)
+        cmd = self.INFO_CMD % _string2bytes(username)
         conn.write(cmd)
 
         # process server response
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         # Pass in the names of fields to return in the dictionary 'field'
         respCode, errorTxt, field = self._deserializeResponse(dat,
@@ -1150,13 +1146,13 @@ private key is not password protected.
 
         :return: none
         """
-        globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
+        globusLoc = os.environ.get(self.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile or not sslKeyFile:
             if globusLoc:
                 sslCertFile = os.path.join(globusLoc,
-                                           *MyProxyClient.HOSTCERT_SUBDIRPATH)
+                                           *self.HOSTCERT_SUBDIRPATH)
                 sslKeyFile = os.path.join(globusLoc,
-                                          *MyProxyClient.HOSTKEY_SUBDIRPATH)
+                                          *self.HOSTKEY_SUBDIRPATH)
             else:
                 raise MyProxyClientError(
             "No client authentication cert. and private key file were given")
@@ -1172,14 +1168,13 @@ private key is not password protected.
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.CHANGE_PASSPHRASE_CMD % (
-                                                _string2bytes(username),
-                                                _string2bytes(passphrase),
-                                                _string2bytes(newPassphrase))
+        cmd = self.CHANGE_PASSPHRASE_CMD % (_string2bytes(username),
+                                            _string2bytes(passphrase),
+                                            _string2bytes(newPassphrase))
         conn.write(cmd)
 
         # process server response
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         respCode, errorTxt = self._deserializeResponse(dat)
         if respCode:
@@ -1207,13 +1202,13 @@ for sslCertFile
 private key is not password protected.
         :return: none
         """
-        globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
+        globusLoc = os.environ.get(self.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile or not sslKeyFile:
             if globusLoc:
                 sslCertFile = os.path.join(globusLoc,
-                                         *MyProxyClient.HOSTCERT_SUBDIRPATH)
+                                           *self.HOSTCERT_SUBDIRPATH)
                 sslKeyFile = os.path.join(globusLoc,
-                                         *MyProxyClient.HOSTKEY_SUBDIRPATH)
+                                          *self.HOSTKEY_SUBDIRPATH)
             else:
                 raise MyProxyClientError(
             "No client authentication cert. and private key file were given")
@@ -1229,11 +1224,11 @@ private key is not password protected.
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send destroy command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.DESTROY_CMD % _string2bytes(username)
+        cmd = self.DESTROY_CMD % _string2bytes(username)
         conn.write(cmd)
 
         # process server response
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         respCode, errorTxt = self._deserializeResponse(dat)
         if respCode:
@@ -1294,13 +1289,13 @@ If creds already, exist exit without proceeding
         if isinstance(passphrase, six.string_types):
             passphrase = str(passphrase)
 
-        globusLoc = os.environ.get(MyProxyClient.GLOBUS_LOCATION_ENVVARNAME)
+        globusLoc = os.environ.get(self.GLOBUS_LOCATION_ENVVARNAME)
         if not sslCertFile or not sslKeyFile:
             if globusLoc:
                 sslCertFile = os.path.join(globusLoc,
-                                           *MyProxyClient.HOSTCERT_SUBDIRPATH)
+                                           *self.HOSTCERT_SUBDIRPATH)
                 sslKeyFile = os.path.join(globusLoc,
-                                          *MyProxyClient.HOSTKEY_SUBDIRPATH)
+                                          *self.HOSTKEY_SUBDIRPATH)
             else:
                 # Default so that the owner is the same as the ID of the
                 # credentials to be uploaded.
@@ -1328,11 +1323,11 @@ If creds already, exist exit without proceeding
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send store command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.STORE_CMD % (_string2bytes(username), lifetime)
+        cmd = self.STORE_CMD % (_string2bytes(username), lifetime)
         conn.write(cmd)
 
         # process server response
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         respCode, errorTxt = self._deserializeResponse(dat)
         if respCode:
@@ -1346,7 +1341,7 @@ If creds already, exist exit without proceeding
 
 
         # process server response
-        resp = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        resp = conn.recv(self.SERVER_RESP_BLK_SIZE)
         respCode, errorTxt = self._deserializeResponse(resp)
         if respCode:
             raise MyProxyClientRetrieveError(errorTxt)
@@ -1498,14 +1493,14 @@ private key is not password protected.
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send get command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.GET_CMD % (_string2bytes(userid),
-                                       _string2bytes(passphrase),
-                                       lifetime)
+        cmd = self.GET_CMD % (_string2bytes(userid),
+                              _string2bytes(passphrase),
+                              lifetime)
 
         conn.write(cmd)
 
         # process server response
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         respCode, errorTxt = self._deserializeResponse(dat)
         if respCode:
@@ -1523,7 +1518,7 @@ private key is not password protected.
             nCerts = ord(dat[0])
 
         # - n certs
-        dat = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        dat = conn.recv(self.SERVER_RESP_BLK_SIZE)
 
         # Check for error generating certificate
         try:
@@ -1537,7 +1532,7 @@ private key is not password protected.
             pass
 
         # process server response
-        resp = conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+        resp = conn.recv(self.SERVER_RESP_BLK_SIZE)
         respCode, errorTxt = self._deserializeResponse(resp)
         if respCode:
             raise MyProxyClientRetrieveError(errorTxt)
@@ -1605,29 +1600,29 @@ item value set to the file contents
         conn.write(self.__class__.GLOBUS_INIT_MSG)
 
         # send get command - ensure conversion from unicode before writing
-        cmd = MyProxyClient.GET_TRUST_ROOTS_CMD % (_string2bytes(username),
-                                                   _string2bytes(passphrase))
+        cmd = self.GET_TRUST_ROOTS_CMD % (_string2bytes(username),
+                                          _string2bytes(passphrase))
         conn.write(cmd)
 
         # process server response chunks until all consumed
         dat = six.binary_type()
         tries = 0
         try:
-            for tries in range(MyProxyClient.MAX_RECV_TRIES):
-                dat += conn.recv(MyProxyClient.SERVER_RESP_BLK_SIZE)
+            for tries in range(self.MAX_RECV_TRIES):
+                dat += conn.recv(self.SERVER_RESP_BLK_SIZE)
         except SSL.SysCallError:
             # Expect this exception when response content exhausted
             pass
 
         # Precaution
-        if tries == MyProxyClient.MAX_RECV_TRIES:
+        if tries == self.MAX_RECV_TRIES:
             log.warning('Maximum %d tries reached for getTrustRoots response '
                         'block retrieval with block size %d',
-                        MyProxyClient.MAX_RECV_TRIES,
-                        MyProxyClient.SERVER_RESP_BLK_SIZE)
+                        self.MAX_RECV_TRIES,
+                        self.SERVER_RESP_BLK_SIZE)
 
-        fieldName = MyProxyClient.TRUSTED_CERTS_FIELDNAME
-        prefix = MyProxyClient.TRUSTED_CERTS_FILEDATA_FIELDNAME_PREFIX
+        fieldName = self.TRUSTED_CERTS_FIELDNAME
+        prefix = self.TRUSTED_CERTS_FILEDATA_FIELDNAME_PREFIX
 
         respCode, errorTxt, fileData = self._deserializeResponse(dat,
                                                                  fieldName,
