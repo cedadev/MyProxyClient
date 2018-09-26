@@ -9,7 +9,7 @@ program myproxy_logon by Tom Uram <turam@mcs.anl.gov>
 """
 __author__ = "P J Kershaw"
 __date__ = "02/06/05"
-__copyright__ = "(C) 2010 Science and Technology Facilities Council"
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = """BSD - See LICENSE file in top-level package directory
 
 For myproxy_logon see Access Grid Toolkit Public License (AGTPL)

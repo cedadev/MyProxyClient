@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'MyProxyClient'
-copyright = '2015, P J Kershaw'
+copyright = 'Copyright 2018 United Kingdom Research and Innovation'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

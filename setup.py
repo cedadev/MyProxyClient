@@ -5,7 +5,7 @@ NERC DataGrid Project
 """
 __author__ = "P J Kershaw"
 __date__ = "12/12/08"
-__copyright__ = "(C) 2011 Science and Technology Facilities Council"
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = """BSD - See LICENSE file in top-level package directory
 
 Software adapted from myproxy_logon.  - For myproxy_logon see Access Grid

@@ -12,20 +12,16 @@ the same options and tries to behave the same with a few exceptions:
      X509_USER_PROXY or specify the ``-o`` option.
 
 """
-
 __author__ = "Stephen Pascoe"
 __date__ = "17/06/2010"
-__copyright__ = "(C) 2010 Science and Technology Facilities Council"
-__license__ = __license__ = """BSD - See LICENSE file in top-level directory
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__license__ = """BSD - See LICENSE file in top-level package directory
 
 For myproxy_logon see Access Grid Toolkit Public License (AGTPL)
 
 This product includes software developed by and/or derived from the Access
 Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
-
-__revision__ = '$Id$'
-
 import sys
 import optparse
 import getpass
