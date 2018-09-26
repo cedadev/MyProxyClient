@@ -5,10 +5,9 @@ NERC Data Grid Project
 """
 __author__ = "P J Kershaw"
 __date__ = "08/02/07"
-__copyright__ = "(C) 2009 Science and Technology Facilities Council"
-__license__ = """BSD - See LICENSE file in top-level directory"""
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__license__ = """BSD - See LICENSE file in top-level package directory"""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
-__revision__ = '$Id:openssl.py 4643 2008-12-15 14:53:53Z pjkersha $'
 import re
 import os
 

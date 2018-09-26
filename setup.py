@@ -5,8 +5,8 @@ NERC DataGrid Project
 """
 __author__ = "P J Kershaw"
 __date__ = "12/12/08"
-__copyright__ = "(C) 2011 Science and Technology Facilities Council"
-__license__ = """BSD - See LICENSE file in top-level directory
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__license__ = """BSD - See LICENSE file in top-level package directory
 
 Software adapted from myproxy_logon.  - For myproxy_logon see Access Grid
 Toolkit Public License (AGTPL)
@@ -15,7 +15,6 @@ This product includes software developed by and/or derived from the Access
 Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
-__revision__ = '$Id$'
 
 # Bootstrap setuptools if necessary.
 try:
@@ -26,6 +25,9 @@ except ImportError:
     from setuptools import setup, find_packages
 
 import os
+
+from myproxy.client import __version__ as MYPROXY_RELEASE
+
 THIS_DIR = os.path.dirname(__file__)
 
 # Read succeeds for sdist creation but fails for build with pip install.  Added
@@ -41,7 +43,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'2.0.1',
+    version =         	MYPROXY_RELEASE,
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',

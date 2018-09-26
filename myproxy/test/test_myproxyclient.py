@@ -5,10 +5,9 @@ NERC Data Grid Project
 """
 __author__ = "P J Kershaw"
 __date__ = "02/07/07"
-__copyright__ = "(C) 2009 Science and Technology Facilities Council"
-__license__ = """BSD- See LICENSE file in top-level directory"""
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__license__ = """BSD - See LICENSE file in top-level directory"""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
-__revision__ = '$Id$'
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -23,6 +22,7 @@ from myproxy.client import CaseSensitiveConfigParser, MyProxyClient
 
 mkPath = lambda file_: path.join(os.environ['MYPROXYCLIENT_UNITTEST_DIR'],
                                  file_)
+
 
 class _MyProxyClientTestCase(unittest.TestCase):
     '''Base implements environment settings common to all test case classes'''

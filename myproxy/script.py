@@ -12,20 +12,16 @@ the same options and tries to behave the same with a few exceptions:
      X509_USER_PROXY or specify the ``-o`` option.
 
 """
-
 __author__ = "Stephen Pascoe"
 __date__ = "17/06/2010"
-__copyright__ = "(C) 2010 Science and Technology Facilities Council"
-__license__ = __license__ = """BSD - See LICENSE file in top-level directory
+__copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
+__license__ = """BSD - See LICENSE file in top-level package directory
 
 For myproxy_logon see Access Grid Toolkit Public License (AGTPL)
 
 This product includes software developed by and/or derived from the Access
 Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
-
-__revision__ = '$Id$'
-
 import sys
 import optparse
 import getpass
@@ -115,8 +111,13 @@ environment variable or ~/.globus/certificates or /etc/grid-security.
 
     op.add_option('-l', '--username', dest='username',
                   action='store', type='string',
-                  help=\
-        'Set username.  Defaults to "LOGNAME" environment variable setting.')
+                  help='Set username.  Defaults to "LOGNAME" environment '
+                       'variable setting.')
+
+    op.add_option('-e', '--error_trace', dest='error_trace',
+                  action='store_true',
+                  help='Display full stack trace for errors.  Default is to '
+                       'show single error message')
 
     op.set_defaults(
         outfile=None,
@@ -128,6 +129,7 @@ environment variable or ~/.globus/certificates or /etc/grid-security.
         trustroots=False,
         openid=None,
         username=None,
+        error_trace=False,
         stdin_pass=False,
         no_pass=False,
         )
@@ -220,7 +222,17 @@ def do_logon(myproxy, options):
                               bootstrap=options.bootstrap,
                               updateTrustRoots=options.trustroots)
     except MyProxyClientError as e:
-        raise SystemExit("Error retrieving credentials: {}".format(e))
+        if options.error_trace:
+            raise # Display full error trace
+        else:
+            raise SystemExit("MyProxy error retrieving credentials: "
+                             "{}".format(e))
+
+    except Exception as e:
+        if options.error_trace:
+            raise # Display full error trace
+        else:
+            raise SystemExit("Error retrieving credentials: {}".format(e))
 
     if options.outfile == '-':
         fout = sys.stdout
