@@ -25,6 +25,9 @@ except ImportError:
     from setuptools import setup, find_packages
 
 import os
+
+from myproxy.client import __version__ as MYPROXY_RELEASE
+
 THIS_DIR = os.path.dirname(__file__)
 
 # Read succeeds for sdist creation but fails for build with pip install.  Added
@@ -40,7 +43,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'2.0.2',
+    version =         	MYPROXY_RELEASE,
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',

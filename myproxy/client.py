@@ -18,6 +18,10 @@ This product includes software developed by and/or derived from the Access
 Grid Project (http://www.accessgrid.org) to which the U.S. Government retains
 certain rights."""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
+
+# Overall version identifier for MyProxyClient package
+__version__ = '2.0.3'
+
 import sys
 import os
 import socket
