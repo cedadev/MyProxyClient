@@ -32,6 +32,11 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+2.1.0
+-----
+ * Refactored package hierarchy - `myproxy.client` is now a package
+ * fixed `six` package dependency
+ 
 2.0.3
 -----
  * Default to TLS v1.2 for security
