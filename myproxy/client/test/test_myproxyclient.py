@@ -235,7 +235,7 @@ class MyProxyClientLiveTestCase(_MyProxyClientTestCase):
         print(("Destroy creds for user %s" % thisSection['username']))
 
 
-from myproxy.utils.openssl import OpenSSLConfigError
+from myproxy.client.utils.openssl import OpenSSLConfigError
 
 class MyProxyClientInterfaceTestCase(_MyProxyClientTestCase):
     '''Test interface for correct getting/setting of attributes'''

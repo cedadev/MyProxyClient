@@ -4,8 +4,8 @@ Lightweight command-line interface to MyProxyClient.
 Sub commands
 ------------
 
-``myproxyclient logon`` a replacement for myproxy-logon.  It understands most of
-the same options and tries to behave the same with a few exceptions:
+``myproxyclient logon`` a replacement for myproxy-logon.  It understands most 
+of the same options and tries to behave the same with a few exceptions:
 
   1. -C/--cadir allows you to override the CA directory
   2. It will not write the credentials to /tmp.  You must either set

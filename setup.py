@@ -26,8 +26,6 @@ except ImportError:
 
 import os
 
-from myproxy.client import __version__ as MYPROXY_RELEASE
-
 THIS_DIR = os.path.dirname(__file__)
 
 # Read succeeds for sdist creation but fails for build with pip install.  Added
@@ -43,7 +41,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	MYPROXY_RELEASE,
+    version =         	'2.1.0',
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',
@@ -52,7 +50,7 @@ setup(
     maintainer_email =  'Philip.Kershaw@stfc.ac.uk',
     url =             	'https://github.com/cedadev/MyProxyClient',
     platforms =         ['POSIX', 'Linux', 'Windows'],
-    install_requires =  ['pyOpenSSL'],
+    install_requires =  ['pyOpenSSL', 'six'],
     license =           __license__,
     test_suite =        'myproxy.test',
     packages =          find_packages(),
@@ -87,7 +85,7 @@ setup(
     ],
     zip_safe = False,
     entry_points = {
-        'console_scripts': ['myproxyclient = myproxy.script:main',
+        'console_scripts': ['myproxyclient = myproxy.client.script:main',
                             ],
         }
 )
