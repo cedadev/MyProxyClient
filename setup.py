@@ -41,7 +41,7 @@ except IOError:
 
 setup(
     name =            	'MyProxyClient',
-    version =         	'2.1.0',
+    version =         	'2.1.1',
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
     author =          	'Philip Kershaw',
@@ -57,7 +57,7 @@ setup(
     include_package_data = True,
     package_data =      {
         '': ['README.md'],
-        'myproxy': ['LICENSE'],
+        'myproxy.client': ['LICENSE'],
         'myproxy.test': [
             '*.cfg', '*.conf', '*.crt', '*.csr', '*.key', 'README'
             ]
