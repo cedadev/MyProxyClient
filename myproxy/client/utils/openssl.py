@@ -12,14 +12,14 @@ import re
 import os
 
 import six
-from six.moves.configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
 class OpenSSLConfigError(Exception):
     """Exceptions related to OpenSSLConfig class"""
 
 
-class OpenSSLConfig(SafeConfigParser, object):
+class OpenSSLConfig(ConfigParser, object):
     """Wrapper to OpenSSL Configuration file to allow extraction of
     required distinguished name used for making certificate requests
 
