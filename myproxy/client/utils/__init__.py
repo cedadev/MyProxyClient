@@ -8,14 +8,14 @@ __date__ = "15/12/08"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = """BSD - See LICENSE file in top-level package directory"""
 __contact__ = "Philip.Kershaw@stfc.ac.uk"
-from six.moves.configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
-class CaseSensitiveConfigParser(SafeConfigParser):
+class CaseSensitiveConfigParser(ConfigParser):
     '''Subclass the SafeConfigParser - to preserve the original string case of
     config section names
     '''
     def optionxform(self, optionstr):
-        '''Extend SafeConfigParser.optionxform to preserve case of option names
+        '''Extend ConfigParser.optionxform to preserve case of option names
         '''
         return optionstr
