@@ -64,7 +64,7 @@ class OpenSSLConfig(ConfigParser, object):
         in OpenSSL config file where present.  caDir can be left out in
         which case the substitution is not done"""
 
-        SafeConfigParser.__init__(self)
+        ConfigParser.__init__(self)
 
         self._reqDN = None
         self._setFilePath(filePath)
@@ -185,7 +185,7 @@ class OpenSSLConfig(ConfigParser, object):
 
         idx = re.search('\[\s*\w*\s*\]', fileTxt).span()[0]
         config_file.seek(idx)
-        SafeConfigParser.readfp(self, config_file)
+        ConfigParser.read_file(self, config_file)
 
         # Filter section names and remove comments from options
         for section, val in list(self._sections.items()):
@@ -211,7 +211,7 @@ class OpenSSLConfig(ConfigParser, object):
             # Leave $dir in place as no CA directory has been set
             return filtVal
 
-    def readfp(self, fp):
+    def read_file(self, fp):
         """Set to not implemented as using a file object could be problematic
         given read() has to seek ahead to the first actual section to avoid
         parsing errors"""
