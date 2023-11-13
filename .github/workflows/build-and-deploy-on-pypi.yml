@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - add_pypi_pkg_build_GA
 
 jobs:
   build-n-publish:
