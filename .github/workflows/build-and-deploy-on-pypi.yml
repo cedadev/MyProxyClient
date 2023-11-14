@@ -12,8 +12,14 @@ jobs:
   build-n-publish:
     name: Build and publish MyProxyClient on PyPi
     runs-on: ubuntu-latest
+    # may also need this for publishing?
+    environment:
+      name: pypi
+      url: https://pypi.org/project/MyProxyClient/
     # use the new Trusted Publishers feature
     # details at https://blog.pypi.org/posts/2023-04-20-introducing-trusted-publishers/
+    # to add a PyPI project to Trusted Publishers, see
+    # https://docs.pypi.org/trusted-publishers/adding-a-publisher/
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
