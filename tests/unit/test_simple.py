@@ -18,9 +18,9 @@ def test_members():
 
 def test_simple():
     """Test a simple instance of MyProxyClient."""
-    hostname = "www.google.com"
+    hostname = "example.com"
     c = MyProxyClient(hostname=hostname, caCertDir="")
-    assert c.hostname == "www.google.com"
+    assert c.hostname == "example.com"
     assert not c.caCertDir
     assert c.proxyCertLifetime == 43200
     assert not c.serverDN
