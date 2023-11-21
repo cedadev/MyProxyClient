@@ -13,7 +13,6 @@ jobs:
   build-n-publish:
     name: Build and publish MyProxyClient on PyPi
     runs-on: ubuntu-latest
-    # may also need this for publishing?
     environment:
       name: pypi
       url: https://pypi.org/project/MyProxyClient/
@@ -46,10 +45,10 @@ jobs:
           --binary
           --out-dir dist/
           .
-      - name: Publish distribution 📦 to Test PyP
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
+      # - name: Publish distribution 📦 to Test PyP
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     repository-url: https://test.pypi.org/legacy/
       - name: Publish distribution 📦 to PyPI
         if: startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
