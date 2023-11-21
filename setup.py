@@ -44,6 +44,7 @@ setup(
     version =         	'2.1.1',
     description =     	'MyProxy Client',
     long_description = 	LONG_DESCR,
+    long_description_content_type='text/markdown',
     author =          	'Philip Kershaw',
     author_email =    	'Philip.Kershaw@stfc.ac.uk',
     maintainer =        'Philip Kershaw',

@@ -12,7 +12,7 @@ from configparser import ConfigParser
 
 
 class CaseSensitiveConfigParser(ConfigParser):
-    '''Subclass the SafeConfigParser - to preserve the original string case of
+    '''Subclass ConfigParser - to preserve the original string case of
     config section names
     '''
     def optionxform(self, optionstr):
