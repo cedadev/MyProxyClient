@@ -1,6 +1,4 @@
 MyProxyClient.egg-info/
 build/
 dist/
-myproxy/client/__pycache__/
-myproxy/client/utils/__pycache__/
-tests/unit/__pycache__/
+__pycache__/
