@@ -1,6 +1,6 @@
 MyProxy Client Package
 ======================
-This a pure* Python implementation of a client to the MyProxy Credential
+This a *pure* Python implementation of a client to the MyProxy Credential
 Management Server (http://grid.ncsa.uiuc.edu/myproxy/).  It provides both a
 Python API and a command line interface.
 
@@ -32,6 +32,11 @@ $ myproxyclient logon -s myproxy.somewhere.ac.uk -l <username> -o creds.pem -b
 
 Releases
 ========
+2.1.1
+-----
+* allow support for Python=3.12 via retirement of `SafeConfigParser` via [#20](https://github.com/cedadev/MyProxyClient/pull/20) by [Valeriu Predoi](https://github.com/valeriupredoi) and checked by [Alan Iwi](https://github.com/alaniwi)
+* added Python package components (basic unit test, Github Action that builds and uploads the package) via [#22](https://github.com/cedadev/MyProxyClient/pull/22) by [Valeriu Predoi](https://github.com/valeriupredoi) and [Bouwe Andela](https://github.com/bouweandela)
+
 2.1.0
 -----
  * Refactored package hierarchy - `myproxy.client` is now a package
